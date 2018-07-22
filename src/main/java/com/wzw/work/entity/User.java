@@ -2,7 +2,7 @@ package com.wzw.work.entity;
 
 
 /**
- * @Description: 城市实体类
+ * @Description: 用户实体类
  *
  * @author Created by wuzhangwei on 2018/7/21 14:45
  */
