@@ -22,7 +22,7 @@ import java.util.Map;
  * @param 
  * @author Created by wuzhangwei on 2018/7/21 14:17
  */
-@Controller
+@RestController
 public class UserRestController {
 
     @Autowired
