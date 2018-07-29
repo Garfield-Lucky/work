@@ -1,5 +1,6 @@
 package com.wzw.work.entity;
 
+import java.util.Date;
 
 /**
  * @Description: 用户实体类
@@ -16,8 +17,8 @@ public class User {
     /**
      * 用户名
      */
-    private String userName;
 
+    private String userName;
     /**
      * 密码
      */
@@ -47,6 +48,19 @@ public class User {
      * 微信
      */
     private String wx;
+
+
+    /**
+     * 最后登录时间
+     */
+    private Date lastLoginTime;
+
+    /**
+     * 状态
+     */
+    private Integer status;
+
+
 
     public Long getId() {
         return id;
@@ -110,6 +124,20 @@ public class User {
 
     public void setWx(String wx) {
         this.wx = wx;
+    }
+
+    public Date getLastLoginTime() { return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) { this.lastLoginTime = lastLoginTime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
 
