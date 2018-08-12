@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wzw.work.dao.KityMindDao">
+	<resultMap id="BaseResultMap" type="com.wzw.work.entity.KityMind">
+		<result column="id" property="id" />
+		<result column="create_user_name" property="createUserName" />
+		<result column="create_time" property="createTime" />
+		<result column="mind_name" property="mindName" />
+		<result column="content" property="content" />
+		<result column="delete_flag" property="deleteFlag" />
+		<result column="is_open" property="isOpen" />
+	</resultMap>
+
+	<parameterMap id="KityMind" type="com.wzw.work.entity.KityMind"/>
+
+	<sql id="Base_Column_List">
+		id, create_user_name, create_time, mind_name, content, delete_flag, is_open
+	</sql>
+
+	<select id="queryKityMiindById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from kity_mind
+		where id = #{id}
+	</select>
+
+	<insert id="saveKityMind" parameterType="com.wzw.work.entity.KityMind" >
+
+		insert into kity_mind (create_user_name, mind_name, content, delete_flag, is_open
+		)
+		values (#{createUserName,jdbcType=VARCHAR}, #{mindName,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=INTEGER}, #{isOpen,jdbcType=INTEGER}
+		)
+	</insert>
+
+</mapper>
