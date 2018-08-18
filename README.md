@@ -1,1 +1,1 @@
-# work
+这是我的一个springBoot项目的技术栈，主要是整合各种技术到springBoot框架中，是一个学习springBoot的过程。
