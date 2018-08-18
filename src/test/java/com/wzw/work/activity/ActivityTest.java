@@ -74,7 +74,7 @@ public class ActivityTest {
     @Test
     public void findMyPersonTask() {
         ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
-        String assignee = "张三";
+        String assignee = "李四";
         List<Task> list = processEngine.getTaskService()// 与正在执行的认为管理相关的Service
                 .createTaskQuery()// 创建任务查询对象
                 .taskAssignee(assignee)// 指定个人认为查询，指定办理人
