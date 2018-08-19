@@ -24,7 +24,7 @@
     <!--标题-->
     <div class="row">
         <div class="col-md-12">
-            <h1>SSM-CRUD</h1>
+            <h1>用户增删改查</h1>
         </div>
 
     </div>
@@ -93,12 +93,12 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
 
-                    <li><a href="${pageContext.request.contextPath}/emps?pn=1">首页</a></li>
+                    <li><a href="${pageContext.request.contextPath}/user/userList?pageNum=1">首页</a></li>
 
                     <!--上一页-->
                     <li>
                         <c:if test="${pageInfo.hasPreviousPage}">
-                            <a href="${pageContext.request.contextPath}/emps?pn=${pageInfo.pageNum-1}" aria-label="Previous">
+                            <a href="${pageContext.request.contextPath}/user/userList?pageNum=${pageInfo.pageNum-1}" aria-label="Previous">
                                 <span aria-hidden="true">«</span>
                             </a>
                         </c:if>
@@ -110,21 +110,21 @@
                             <li class="active"><a href="#">${page_num}</a></li>
                         </c:if>
                         <c:if test="${page_num != pageInfo.pageNum}">
-                            <li><a href="${pageContext.request.contextPath}/emps?pn=${page_num}">${page_num}</a></li>
+                            <li><a href="${pageContext.request.contextPath}/user/userList?pageNum=${page_num}">${page_num}</a></li>
                         </c:if>
                     </c:forEach>
 
                     <!--下一页-->
                     <li>
                         <c:if test="${pageInfo.hasNextPage}">
-                            <a href="${pageContext.request.contextPath}/emps?pn=${pageInfo.pageNum+1}"
+                            <a href="${pageContext.request.contextPath}/user/userList?pageNum=${pageInfo.pageNum+1}"
                                aria-label="Next">
                                 <span aria-hidden="true">»</span>
                             </a>
                         </c:if>
                     </li>
 
-                    <li><a href="${pageContext.request.contextPath}/emps?pn=${pageInfo.pages}">尾页</a></li>
+                    <li><a href="${pageContext.request.contextPath}/user/userList?pageNum=${pageInfo.pages}">尾页</a></li>
                 </ul>
             </nav>
         </div>
