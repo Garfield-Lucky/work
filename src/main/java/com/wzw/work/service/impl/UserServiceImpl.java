@@ -92,4 +92,37 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /**
+     * @Description: 返回用户列表
+     *
+     * @param
+     * @author Created by wuzhangwei on 2018/8/19 18:03
+     */
+    public List<User> findUserList(Map map){
+        logger.info("findUserList");
+        return userDao.findUserList(map);
+    }
+
+    /**
+     * @Description: 获取用户总数
+     *
+     * @param
+     * @author Created by wuzhangwei on 2018/8/19 16:39
+     */
+    public Long countByUser(){
+        logger.info("findUserList");
+        return userDao.countByUser();
+    }
+
+    /**
+     * @Description: 根据用户id删除用户
+     *
+     * @param
+     * @author Created by wuzhangwei on 2018/8/19 16:39
+     */
+    public void deleteByPrimaryKey(Integer id){
+        logger.info("deleteByPrimaryKey"+id);
+        userDao.deleteByPrimaryKey(id);
+    }
+
 }

@@ -69,4 +69,27 @@ public interface UserDao {
       */
      Set<String> findPermissions(String userName);
 
+    /**
+     * @Description: 查询用户列表
+     *
+     * @param
+     * @author Created by wuzhangwei on 2018/7/22 18:00
+     */
+    List<User> findUserList(Map map);
+
+    /**
+     * @Description: 获取用户总数
+     *
+     * @param
+     * @author Created by wuzhangwei on 2018/8/19 16:39
+     */
+    Long countByUser();
+    /**
+     * @Description: 根据用户id删除用户
+     *
+     * @param
+     * @author Created by wuzhangwei on 2018/8/19 16:39
+     */
+    void deleteByPrimaryKey(Integer id);
+
 }

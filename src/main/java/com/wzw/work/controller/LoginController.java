@@ -59,6 +59,23 @@ public class LoginController {
         }
     }
 
+
+    /**
+     * @Description: 首页
+     *
+     * @param
+     * @author Created by wuzhangwei on 2018/7/22 9:12
+     */
+    @RequestMapping(value = {"/","/index"})
+    public ModelAndView index(Map<String, Object> model){
+        //如果用的是@RestController注解，则把返回的String当做结果，而非视图
+        //如果用的是@Controller注解，则把返回的String当做视图名称，框架默认会去 spring.view.prefix 目录下的 （index拼接spring.view.suffix）页面
+        logger.info("***************************index****************************");
+        ModelAndView mav = new ModelAndView("index");
+        mav.addObject("message",  "hello world");
+        return mav;
+    }
+
     @RequestMapping("/add")
     public String addUser(){
         logger.info("addUser");

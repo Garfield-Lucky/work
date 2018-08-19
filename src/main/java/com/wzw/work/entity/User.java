@@ -12,7 +12,7 @@ public class User {
     /**
      * 用户id
      */
-    private Long id;
+    private Integer id;
 
     /**
      * 用户名
@@ -62,11 +62,11 @@ public class User {
 
 
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
