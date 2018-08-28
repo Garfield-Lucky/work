@@ -1,5 +1,10 @@
 package com.wzw.work.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.Date;
 
 /**
@@ -7,7 +12,14 @@ import java.util.Date;
  *
  * @author Created by wuzhangwei on 2018/7/21 14:45
  */
+
+//@Data注解的作用相当于 @Getter @Setter @RequiredArgsConstructor @ToString @EqualsAndHashCode的合集
+@Setter
+@Getter
+@ToString
+@EqualsAndHashCode
 public class User {
+
 
     /**
      * 用户id
@@ -61,84 +73,6 @@ public class User {
     private Integer status;
 
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getTrueName() {
-        return trueName;
-    }
-
-    public void setTrueName(String trueName) {
-        this.trueName = trueName;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    public String getWx() {
-        return wx;
-    }
-
-    public void setWx(String wx) {
-        this.wx = wx;
-    }
-
-    public Date getLastLoginTime() { return lastLoginTime;
-    }
-
-    public void setLastLoginTime(Date lastLoginTime) { this.lastLoginTime = lastLoginTime;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 }
 
 

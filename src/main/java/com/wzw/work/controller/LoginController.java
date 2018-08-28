@@ -4,6 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wzw.work.entity.User;
 import com.wzw.work.service.UserService;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -31,11 +33,14 @@ import java.util.Map;
  * @param
  * @author Created by wuzhangwei on 2018/7/22 17:27
  */
+
+@Slf4j
 @Controller
 @RequestMapping("/")
 public class LoginController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    //@Log相当于下面这句
+    //private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     private UserService userService;
@@ -43,7 +48,7 @@ public class LoginController {
     @RequestMapping("/login")
     public String login(User user, Model model,HttpServletRequest request){
 
-        logger.info(user.getUserName()+" 用户登录");
+        log.info(user.getUserName()+" 用户登录");
         Subject subject = SecurityUtils.getSubject() ;
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(),user.getPassword()) ;
         try {
@@ -54,7 +59,7 @@ public class LoginController {
             return "index" ;
         }catch (Exception e){
             model.addAttribute("error","用户名或密码错误") ;
-            logger.info(user.getUserName()+" 用户名或密码错误");
+            log.info(user.getUserName()+" 用户名或密码错误");
             return "../../login" ;
         }
     }
@@ -70,7 +75,7 @@ public class LoginController {
     public ModelAndView index(Map<String, Object> model){
         //如果用的是@RestController注解，则把返回的String当做结果，而非视图
         //如果用的是@Controller注解，则把返回的String当做视图名称，框架默认会去 spring.view.prefix 目录下的 （index拼接spring.view.suffix）页面
-        logger.info("***************************index****************************");
+        log.info("***************************index****************************");
         ModelAndView mav = new ModelAndView("index");
         mav.addObject("message",  "hello world");
         return mav;
@@ -78,31 +83,31 @@ public class LoginController {
 
     @RequestMapping("/add")
     public String addUser(){
-        logger.info("addUser");
+        log.info("addUser");
         return "addUser";
     }
 
     @RequestMapping("/edit")
     public String editUser(){
-        logger.info("addUser");
+        log.info("addUser");
         return "editUser" ;
     }
 
     @RequestMapping("/list")
     public String listUser(){
-        logger.info("addUser");
+        log.info("addUser");
         return "listUser" ;
     }
 
     @RequestMapping("/del")
     public String delUser(){
-        logger.info("addUser");
+        log.info("addUser");
         return "delUser" ;
     }
 
     @RequestMapping("/userList2")
     public String findUserList(@RequestParam(required = false,defaultValue = "1",value = "pageNum")Integer pageNum, @RequestParam(required = false,defaultValue = "5",value = "pageSize")Integer pageSize,Model model) {
-        logger.info("userList2 pageNum "+pageNum+"pageSize "+pageSize);
+        log.info("userList2 pageNum "+pageNum+"pageSize "+pageSize);
         PageHelper.startPage(pageNum, pageSize);
         //startPage后紧跟的这个查询就是分页查询
         List<User> user = userService.findUserList();
@@ -117,7 +122,7 @@ public class LoginController {
     @RequestMapping("/loginOut")
     public String loginOut(HttpServletRequest request) throws IOException {
         HttpSession session = request.getSession();
-        logger.info("loginOut"+session.getAttribute("user").toString());
+        log.info("loginOut"+session.getAttribute("user").toString());
         System.out.println("************************************ "+session.getAttribute("user"));
         Subject subject = SecurityUtils.getSubject() ;
         subject.logout();

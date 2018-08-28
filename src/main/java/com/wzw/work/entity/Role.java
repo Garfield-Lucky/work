@@ -1,9 +1,12 @@
 package com.wzw.work.entity;
 
+import lombok.Data;
+
 /**
  * @author Created by wuzhangwei on 2018/7/2815:01
  * @Description: 用户角色表
  */
+@Data
 public class Role {
 
     /**
@@ -19,21 +22,5 @@ public class Role {
      */
     private Integer userId;
 
-    public Integer getId() { return id;
-    }
 
-    public void setId(Integer id) { this.id = id;
-    }
-
-    public String getRoleName() { return roleName;
-    }
-
-    public void setRoleName(String roleName) { this.roleName = roleName;
-    }
-
-    public Integer getUserId() { return userId;
-    }
-
-    public void setUserId(Integer userId) { this.userId = userId;
-    }
 }

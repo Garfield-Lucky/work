@@ -1,9 +1,12 @@
 package com.wzw.work.entity;
 
+import lombok.Data;
+
 /**
  * @author Created by wuzhangwei on 2018/7/2815:25
  * @Description: 权限表
  */
+@Data
 public class Permission {
 
     /**
@@ -15,19 +18,4 @@ public class Permission {
      */
     private String permissionName;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getPermissionName() {
-        return permissionName;
-    }
-
-    public void setPermissionName(String permissionName) {
-        this.permissionName = permissionName;
-    }
 }

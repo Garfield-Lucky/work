@@ -2,6 +2,7 @@ package com.wzw.work.controller;
 
 import com.wzw.work.entity.KityMind;
 import com.wzw.work.service.KityMindService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,25 +18,26 @@ import java.util.Map;
  * @author Created by wuzhangwei on 2018/7/2921:20
  * @Description: TODO
  */
+@Slf4j
 @Controller
 @RequestMapping("/kityMind")
 public class KityMindController {
 
-    private static final Logger logger = LoggerFactory.getLogger(KityMindController.class);
+//    private static final Logger log = LoggerFactory.getLogger(KityMindController.class);
 
     @Autowired
     KityMindService kityMindService;
 
     @RequestMapping("/addKityMind")
     public String addKityMind(){
-        logger.info("addKityMind");
+        log.info("addKityMind");
         return "addKityMind";
     }
 
     @RequestMapping("/save")
     @ResponseBody
     public Map<String,Object> saveKityMind(KityMind entity){
-        logger.info("save");
+        log.info("save");
         entity.setCreateUserName("wzw");
         kityMindService.saveKityMind(entity);
         Map map =new HashMap<String,Object>();
@@ -46,7 +48,7 @@ public class KityMindController {
 
     @RequestMapping("/viewKityMind")
     public String viewKityMind(Model model,Integer id){
-        logger.info("viewKityMind");
+        log.info("viewKityMind");
         KityMind kityMind = kityMindService.queryKityMiindById(id);
         model.addAttribute("kityMind",kityMind);
         return "viewKityMind";

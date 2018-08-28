@@ -6,16 +6,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wzw.work.entity.User;
 import com.wzw.work.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,11 +21,12 @@ import java.util.Map;
  * @param 
  * @author Created by wuzhangwei on 2018/7/21 14:17
  */
+@Slf4j
 @RestController
 @RequestMapping("/user")
 public class UserRestController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
+//    private static final Logger log = LoggerFactory.getLogger(UserRestController.class);
 
     @Autowired
     private UserService userService;
@@ -45,7 +41,7 @@ public class UserRestController {
     public ModelAndView index(Map<String, Object> model){
         //如果用的是@RestController注解，则把返回的String当做结果，而非视图
         //如果用的是@Controller注解，则把返回的String当做视图名称，框架默认会去 spring.view.prefix 目录下的 （index拼接spring.view.suffix）页面
-        logger.info("***************************index****************************");
+        log.info("***************************index****************************");
         ModelAndView mav = new ModelAndView("index2");
         mav.addObject("message",  "hello world");
         return mav;
@@ -60,7 +56,7 @@ public class UserRestController {
     @RequestMapping("/page")
     public ModelAndView page(Model model){
         // 页面位置 /WEB-INF/jsp/page/page.jsp
-        logger.info("***************************page1****************************");
+        log.info("***************************page1****************************");
         ModelAndView mav = new ModelAndView("page/page");
         mav.addObject("content", "hello");
         return mav;
@@ -75,7 +71,7 @@ public class UserRestController {
      */
     @RequestMapping(value = "/findUserByName", method = RequestMethod.GET)
     public User findOneUser(@RequestParam(value = "userName", required = true) String userName) {
-        logger.info("***************************findOneUser****************************");
+        log.info("***************************findOneUser****************************");
         return userService.findUserByName(userName);
     }
 
@@ -87,7 +83,7 @@ public class UserRestController {
      */
     @RequestMapping(value = "userList", method = RequestMethod.GET)
     public ModelAndView findUserList(@RequestParam(required = false,defaultValue = "1",value = "pageNum")Integer pageNum,@RequestParam(required = false,defaultValue = "5",value = "pageSize")Integer pageSize) {
-        logger.info("***************************findUserList pageNum "+pageNum+" pageSize "+pageSize+"****************************");
+        log.info("***************************findUserList pageNum "+pageNum+" pageSize "+pageSize+"****************************");
         PageHelper.startPage(pageNum, pageSize);
         //startPage后紧跟的这个查询就是分页查询
         List<User> user = userService.findUserList();
@@ -108,7 +104,7 @@ public class UserRestController {
      */
     @RequestMapping("/userManager")
     public ModelAndView userManager(Model model){
-        logger.info("***************************userManager****************************");
+        log.info("***************************userManager****************************");
         ModelAndView mav = new ModelAndView("userManager");
         return mav;
     }
@@ -123,18 +119,18 @@ public class UserRestController {
     //管理员查看用户列表（默认加载）
     @RequestMapping(value="/findUserList")
     public Map<String,Object> findUserList(int page,int pageSize,String userName) {
+        log.info("*********findUserList page "+page+" pageSize "+pageSize+"**********************");
 
         Map map =new HashMap();
         map.put("page",page);
         map.put("pageSize",pageSize);
         map.put("userName",userName);
         List<User> listUser = userService.findUserList(map);
-        Long dataNum = userService.countByUser();
 
         JSONObject json = new JSONObject();
         if(listUser!=null)
         {
-
+            Long dataNum = userService.countByUser();
             json.put("flag",true);
             json.put("status","0000");
             json.put("currentPage",page/pageSize+1);
@@ -160,12 +156,13 @@ public class UserRestController {
         JSONObject json = new JSONObject();
         try {
             userService.deleteByPrimaryKey(id);
+
+            //删除成功，重新查找数据
             Map map =new HashMap();
             map.put("page",page);
             map.put("pageSize",pageSize);
             List<User> listUser = userService.findUserList(map);
             Long dataNum = userService.countByUser();
-
             if(listUser!=null)
             {
                 json.put("flag",true);
@@ -179,7 +176,7 @@ public class UserRestController {
                 json.put("status","1111");
             }
         } catch (Exception e) {
-            logger.error("删除用户失败" + id, e);
+            log.error("删除用户失败" + id, e);
             json.put("flag",false);
             json.put("status","1111");
         }
