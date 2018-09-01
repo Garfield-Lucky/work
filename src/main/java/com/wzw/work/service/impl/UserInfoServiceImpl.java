@@ -79,4 +79,10 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
         return list;
     }
+
+    @Override
+    public void deleteUser(UserInfo user){
+        //根据id去删除对应的索引值
+        userInfoRepository.delete(user);
+    }
 }

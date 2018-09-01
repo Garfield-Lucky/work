@@ -7,7 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,16 +33,10 @@ public class UserInfoController {
      * @author Created by wuzhangwei on 2018/8/26 20:03
      */
     @RequestMapping("/add")
-    public String esSave() throws Exception {
-        UserInfo user = new UserInfo();
-        user.setId(5L);
-        user.setName("王皮皮");
-        user.setAge(26);
-        user.setCreatetm("2018-8-26 11:07:42");
-        user.setDescription("王皮皮是个UI设计师");
+    public String esSave(UserInfo user) throws Exception {
+        log.info("save"+user.toString());
         try{
             userInfoService.insert(user);
-            log.info("save"+user.toString());
             return "success";
         }catch(Exception e){
             log.error("入库失败");
@@ -54,7 +50,7 @@ public class UserInfoController {
      * @author Created by wuzhangwei on 2018/8/26 20:04
      */
     @RequestMapping("/query")
-    public List<UserInfo> esSearch(String queryContent) throws Exception{
+    public List<UserInfo> esSearch(@RequestParam(value = "queryContent", required = false) String queryContent) throws Exception{
         log.info("query："+queryContent);
         List<UserInfo> userList= userInfoService.search(queryContent);
         for(UserInfo user:userList){
@@ -69,19 +65,32 @@ public class UserInfoController {
      * @author Created by wuzhangwei on 2018/8/26 21:11
      */
     @RequestMapping("/update")
-    public String esUpdate() throws Exception {
-        UserInfo user = new UserInfo();
-        user.setId(5L);
-        user.setName("王皮皮");
-        user.setAge(24);
-        user.setCreatetm("2018-8-26 11:07:46");
-        user.setDescription("王皮皮是个产品经理");
+    public String esUpdate(UserInfo user) throws Exception {
+        log.info("update"+user.toString());
         try{
             userInfoService.insert(user);
-            log.info("update"+user.toString());
             return "success";
         }catch(Exception e){
             log.error("更新失败");
+            return "fail";
+        }
+    }
+
+    /**
+     * @Description: 删除
+     * @param
+     * @author Created by wuzhangwei on 2018/8/26 21:11
+     */
+    @RequestMapping("/delete")
+    public String esDelete(@RequestParam(value = "id", required = true) Long id) throws Exception {
+        UserInfo user = new UserInfo();
+        user.setId(id);
+        try{
+            userInfoService.deleteUser(user);
+            log.info("delete "+id);
+            return "success";
+        }catch(Exception e){
+            log.error("删除失败");
             return "fail";
         }
     }
