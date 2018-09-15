@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.DispatcherServlet;
 
 
@@ -31,16 +33,18 @@ public class Application {
     /**
      * @Description: 修改DispatcherServlet默认配置
      *
-     * @param 
+     * @param
      * @author Created by wuzhangwei on 2018/7/22 9:46
      */
-    @Bean
-    public ServletRegistrationBean dispatcherRegistration(DispatcherServlet dispatcherServlet) {
-        ServletRegistrationBean registration = new ServletRegistrationBean(dispatcherServlet);
-        registration.getUrlMappings().clear();
-        registration.addUrlMappings("/");
-        registration.addUrlMappings("*.do");
-        return registration;
-    }
+//    @Bean
+//    public ServletRegistrationBean dispatcherRegistration(DispatcherServlet dispatcherServlet) {
+//        ServletRegistrationBean registration = new ServletRegistrationBean(dispatcherServlet);
+//        registration.getUrlMappings().clear();
+//        registration.addUrlMappings("/");
+//        registration.addUrlMappings("*.do");
+//        return registration;
+//    }
+
+
 
 }

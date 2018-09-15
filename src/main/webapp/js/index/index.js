@@ -24,6 +24,18 @@
          $('.mainbody_right').load("/user/userManager");
      });
 
+     //在线脑图（百度脑图）
+     $(".mainbody").find('.kityMind').click(function(){
+
+         $('.mainbody_right').load("/kityMind/addKityMind");
+     });
+
+     //文件上传
+     $(".mainbody").find('.fileUpload').click(function(){
+
+         $('.mainbody_right').load("/file/");
+     });
+
     
  });
 

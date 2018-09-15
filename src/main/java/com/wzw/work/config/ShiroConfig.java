@@ -48,6 +48,11 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/bootstrap-3.3.7-dist/**", "anon");
 
         filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/druid/**", "anon");
+        filterChainDefinitionMap.put("/elasticSearch/**", "anon");
+        filterChainDefinitionMap.put("/appLogin/**", "anon");
+        filterChainDefinitionMap.put("/file/**", "anon");
+
         // 配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/logout", "logout");
 

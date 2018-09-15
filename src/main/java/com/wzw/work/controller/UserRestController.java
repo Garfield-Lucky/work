@@ -6,6 +6,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wzw.work.entity.User;
 import com.wzw.work.service.UserService;
+import com.wzw.work.util.json.JosnToStrUtil;
+import com.wzw.work.util.page.PageQueryResult;
+import com.wzw.work.util.page.PageSettings;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -24,7 +27,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-public class UserRestController {
+public class UserRestController extends BaseController{
 
 //    private static final Logger log = LoggerFactory.getLogger(UserRestController.class);
 
@@ -70,6 +73,7 @@ public class UserRestController {
      * @author Created by wuzhangwei on 2018/7/22 18:01
      */
     @RequestMapping(value = "/findUserByName", method = RequestMethod.GET)
+    @ResponseBody
     public User findOneUser(@RequestParam(value = "userName", required = true) String userName) {
         log.info("***************************findOneUser****************************");
         return userService.findUserByName(userName);
@@ -102,10 +106,10 @@ public class UserRestController {
      * @param
      * @author Created by wuzhangwei on 2018/7/22 9:21
      */
-    @RequestMapping("/userManager")
-    public ModelAndView userManager(Model model){
-        log.info("***************************userManager****************************");
-        ModelAndView mav = new ModelAndView("userManager");
+    @RequestMapping("/list")
+    public ModelAndView list(Model model){
+        log.info("***************************list****************************");
+        ModelAndView mav = new ModelAndView("user/listUser");
         return mav;
     }
 
@@ -118,31 +122,85 @@ public class UserRestController {
      */
     //管理员查看用户列表（默认加载）
     @RequestMapping(value="/findUserList")
-    public Map<String,Object> findUserList(int page,int pageSize,String userName) {
-        log.info("*********findUserList page "+page+" pageSize "+pageSize+"**********************");
+    @ResponseBody
+    public String findUserList(int page,int limit,String userName) {
+        log.info("*********findUserList page "+page+" pageSize "+limit+"**********************");
 
+        PageSettings pageSetting = PageSettings.of(page, limit, sortname, sortorder);
+
+        PageQueryResult<User> pageResult = new PageQueryResult<User>(pageSetting);
         Map map =new HashMap();
-        map.put("page",page);
-        map.put("pageSize",pageSize);
+        map.put("page",page-1);
+        map.put("pageSize",limit);
         map.put("userName",userName);
-        List<User> listUser = userService.findUserList(map);
 
-        JSONObject json = new JSONObject();
-        if(listUser!=null)
-        {
-            Long dataNum = userService.countByUser();
-            json.put("flag",true);
-            json.put("status","0000");
-            json.put("currentPage",page/pageSize+1);
-            json.put("countPage",dataNum%pageSize != 0?(dataNum/pageSize+1):dataNum/pageSize);
-            json.put("dataNum",dataNum);
-            json.put("list",listUser);
-        }else{
-            json.put("flag",false);
-            json.put("status","1111");
-        }
-        return json;
+        List<User> listUser = userService.findUserList(map);
+//        System.out.println(listUser.get(0).toString());
+        // 查询条件
+        pageResult.setTotalCount(listUser.size());
+        pageResult.setResult(listUser);
+        return JosnToStrUtil.ObjToJsonStr_LayUi(pageResult);
     }
+
+    @RequestMapping("/add")
+    public ModelAndView addUser(){
+        log.info("addUser");
+        ModelAndView mav = new ModelAndView("user/addUser");
+        return mav;
+    }
+
+    @RequestMapping("/edit")
+    public ModelAndView editUser(Long id){
+        log.info("editUser");
+        User user = userService.findUserById(id);
+        ModelAndView mav = new ModelAndView("user/editUser");
+        mav.addObject("user",user);
+        return mav;
+    }
+
+    @RequestMapping("/view")
+    public ModelAndView viewUser(Long id){
+        log.info("viewUser");
+        User user = userService.findUserById(id);
+        ModelAndView mav = new ModelAndView("user/viewUser");
+        mav.addObject("user",user);
+        return mav;
+    }
+
+
+    @RequestMapping(value="/editUser")
+    @ResponseBody
+    public String editUser(User user) {
+        JSONObject json = new JSONObject();
+        try {
+            System.out.println(user.toString());
+            userService.updateByPrimaryKey(user);
+            json.put("status","success");
+            json.put("message","更新成功");
+        } catch (Exception e) {
+            log.error("更新用户失败" + user.toString(), e);
+            json.put("status","error");
+            json.put("message","更新失败");
+        }
+        return json.toString();
+    }
+
+    @RequestMapping(value="/addUser")
+    @ResponseBody
+    public String addUser(User user) {
+        JSONObject json = new JSONObject();
+        try {
+            userService.saveUser(user);
+            json.put("status","success");
+            json.put("message","保存成功");
+        } catch (Exception e) {
+            log.error("添加用户失败" + user.toString(), e);
+            json.put("status","error");
+            json.put("message","保存失败");
+        }
+        return json.toString();
+    }
+
 
     /**
      * @Description: 根据用户id删除用户
@@ -152,34 +210,19 @@ public class UserRestController {
      */
     @RequestMapping(value="/delUser")
     @ResponseBody
-    public Map<String,Object> deletUser(Integer page,Integer pageSize,Integer id) {
+    public String deletUser(Integer id) {
         JSONObject json = new JSONObject();
         try {
             userService.deleteByPrimaryKey(id);
-
-            //删除成功，重新查找数据
-            Map map =new HashMap();
-            map.put("page",page);
-            map.put("pageSize",pageSize);
-            List<User> listUser = userService.findUserList(map);
-            Long dataNum = userService.countByUser();
-            if(listUser!=null)
-            {
-                json.put("flag",true);
-                json.put("status","0000");
-                json.put("currentPage",page/pageSize+1);
-                json.put("countPage",dataNum%pageSize != 0?(dataNum/pageSize+1):dataNum/pageSize);
-                json.put("dataNum",dataNum);
-                json.put("list",listUser);
-            }else{
-                json.put("flag",false);
-                json.put("status","1111");
-            }
+            json.put("status","success");
+            json.put("message","删除成功");
         } catch (Exception e) {
             log.error("删除用户失败" + id, e);
-            json.put("flag",false);
-            json.put("status","1111");
+            json.put("status","error");
+            json.put("message","删除失败");
         }
-       return json;
+        return json.toString();
     }
+
+
 }

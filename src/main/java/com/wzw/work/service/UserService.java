@@ -16,6 +16,18 @@ import java.util.Set;
 public interface UserService {
 
     /**
+     * @Description: 保存用户信息
+     * @param
+     * @author Created by wuzhangwei on 2018/9/12 23:11
+     */
+    void saveUser(User user);
+    /**
+     * @Description: 根据主键查询用户信息
+     * @param
+     * @author Created by wuzhangwei on 2018/9/12 23:11
+     */
+    User findUserById(Long id);
+    /**
      * @Description: 根据用户名，查询用户信息
      *
      * @param

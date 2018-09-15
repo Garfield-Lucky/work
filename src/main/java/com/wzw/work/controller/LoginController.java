@@ -4,18 +4,14 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wzw.work.entity.User;
 import com.wzw.work.service.UserService;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,13 +52,25 @@ public class LoginController {
             HttpSession session = request.getSession();
             User loginUser = (User)SecurityUtils.getSubject().getPrincipal();
             session.setAttribute("user",loginUser);
-            return "index" ;
+            return "index";
         }catch (Exception e){
             model.addAttribute("error","用户名或密码错误") ;
             log.info(user.getUserName()+" 用户名或密码错误");
             return "../../login" ;
         }
     }
+
+    @RequestMapping("/appLogin")
+    @ResponseBody
+    public Map<String,String> appLogin(User user){
+         Map<String,String> map = new HashMap<>();
+         map.put("Type","Y");
+         map.put("msg","登录成功");
+         log.info("login");
+         System.out.println("login:"+user.toString());
+         return map;
+    }
+
 
 
     /**
@@ -76,34 +84,11 @@ public class LoginController {
         //如果用的是@RestController注解，则把返回的String当做结果，而非视图
         //如果用的是@Controller注解，则把返回的String当做视图名称，框架默认会去 spring.view.prefix 目录下的 （index拼接spring.view.suffix）页面
         log.info("***************************index****************************");
-        ModelAndView mav = new ModelAndView("index");
+        ModelAndView mav = new ModelAndView("index3");
         mav.addObject("message",  "hello world");
         return mav;
     }
 
-    @RequestMapping("/add")
-    public String addUser(){
-        log.info("addUser");
-        return "addUser";
-    }
-
-    @RequestMapping("/edit")
-    public String editUser(){
-        log.info("addUser");
-        return "editUser" ;
-    }
-
-    @RequestMapping("/list")
-    public String listUser(){
-        log.info("addUser");
-        return "listUser" ;
-    }
-
-    @RequestMapping("/del")
-    public String delUser(){
-        log.info("addUser");
-        return "delUser" ;
-    }
 
     @RequestMapping("/userList2")
     public String findUserList(@RequestParam(required = false,defaultValue = "1",value = "pageNum")Integer pageNum, @RequestParam(required = false,defaultValue = "5",value = "pageSize")Integer pageSize,Model model) {

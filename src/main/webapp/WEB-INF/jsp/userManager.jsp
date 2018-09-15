@@ -1,10 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
- 
+
 <!-- 用户信息管理 -->
-<link rel="stylesheet" type="text/css" href="css/common/common.css">
-<link rel="stylesheet" type="text/css" href="css/user/userManager.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/common/common.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/user/userManager.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/index/index.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/common/common.css">
+<script src="${pageContext.request.contextPath}/js/jquery/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/handlebars-v2.0.0.js"></script>
+<script src="${pageContext.request.contextPath}/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <body>
 <div class="query" >
  <form class="form-inline" role="form">
@@ -47,9 +53,9 @@
  </ul>
 
 </div>
-<script src="js/jquery/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="js/handlebars-v2.0.0.js"></script>
-<script class="userManager" src="js/user/userManager.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/handlebars-v2.0.0.js"></script>
+<script class="userManager" src="${pageContext.request.contextPath}/js/user/userManager.js"></script>
  <script id="userList" type="text/x-handlebars-template">
  {{#each this}}
  <tr>

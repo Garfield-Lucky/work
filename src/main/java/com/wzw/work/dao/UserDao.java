@@ -21,12 +21,21 @@ import java.util.Set;
 public interface UserDao {
 
    /**
+    * @Description: 添加用户
+    * @param
+    * @author Created by wuzhangwei on 2018/9/12 8:06
+    */
+    public void saveUser(User user);
+
+   /**
     * @Description: 根据用户名称，查询用户信息
     *
     * @param userName 用户名
     * @author Create by wuzhangwei on 2018/7/21 13:57
     */
     User findByName(@Param("userName") String userName);
+
+    User findUserById(Long id);
 
     /**
      * @Description: 返回用户列表

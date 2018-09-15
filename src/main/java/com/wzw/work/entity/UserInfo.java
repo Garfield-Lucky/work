@@ -27,6 +27,16 @@ public class UserInfo implements Serializable {
     private Integer age;
 
     /**
+     * 性别
+     */
+    private String sex;
+
+    /**
+     * 电话
+     */
+    private String tel;
+
+    /**
      * 描述
      */
     private String description;

@@ -25,6 +25,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
+    public void saveUser(User user) {
+        logger.info("saveUser"+user.toString());
+        userDao.saveUser(user);
+    }
+
+    public User findUserById(Long id) {
+        logger.info("findUserById"+id);
+        return userDao.findUserById(id);
+    }
+
+
     /**
      * @Description:  通过用户名查找用户信息
      *

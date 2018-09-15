@@ -301,7 +301,6 @@ function pageA(state,pageTo){
 
 //进入页面后自动调用此方法去后台查询数据
  function userList() {
-		
 		$.ajax({
 			type : "POST",
 			url : "user/findUserList",

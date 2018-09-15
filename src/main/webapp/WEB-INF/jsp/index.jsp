@@ -1,105 +1,115 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
- <%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
- 
-<!DOCTYPE html>
-<html>
-   <head>
-      <title>Easy Work</title>
-      <base href="<%=basePath%>" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
-      <link rel="stylesheet" type="text/css" href="css/index/index.css">
-      <script src="js/jquery/jquery-1.9.1.min.js"></script>
-      <script type="text/javascript" src="js/handlebars-v2.0.0.js"></script>
-      <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-      <script src="js/index/index.js"></script>
-      <link rel="stylesheet" type="text/css" href="css/common/common.css">
-   </head>
-   <body>
-	   <div class="nav" style="background-image: url('img/index/nav.gif');">
-	     <img class="icon" src="img/index/logo.png" title="easy首页"></img>
-		  <ul class="nav_menu">
-<!-- 			<li class="active"><a href="#">主页</a></li> -->
-<!-- 			<li><a href="#">个性化</a></li> -->
-<!-- 			<li><a href="#">公告</a></li> -->
-			<li class="logout"><a title="退出系统"><span class="glyphicon glyphicon-off" style="font-size: 16px;color:#CC2921;"></span></a></li>
-			<li class="loginUser" ><span class="glyphicon glyphicon-user user_icon" style="font-size: 16px;color:#3276B1;"></span><span>${userInfo.trueName}</span></li>
-		</ul>
-	   </div>
-	   <div class="mainbody">
-	      <div class="mainbody_left panel-group" id="according">
-<!-- 	       使第一个模块距离顶部留点距离 -->
-          <div class="Mtop one">
-          </div><!-- one -->
-	         <div class="panel panel-default">
-			  <button  class="btn btn-primary location" data-toggle="collapse" 
-			     data-parent="#according" data-target="#demo1">
-		                  常用功能
-	           </button> 
-	           <br>
-	           <div id="demo1" class="collapse">
-		           <ul>
-				        <li >
-				            <a class="register_info">登记信息</a>
-				        </li>
-				   </ul>
-	          </div>
-	        </div>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<head>
+<title>EasyWork</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/index/xadmin.css?time=<%=System.currentTimeMillis()%>">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css?time=<%=System.currentTimeMillis()%>">
+<script src="${pageContext.request.contextPath}/js/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/swiper.jquery.min.js" type="text/javascript" ></script>
+<script src="${pageContext.request.contextPath}/layui/layui.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/xadmin.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/common_layui.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
+<style type="text/css">
+
+</style>
+<head>
+<body  style="padding: 0px;">
+<!-- 顶部开始 -->
+<div class="container">
+    <div class="logo">
+        <font size="5px"> EasyWork </font>
+    </div>
+    <div class="open-nav">
+        <i class="iconfont">&#xe699;</i>
+    </div>
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item" style="float:right;margin-right:50px;color: #000;"><a href="javascript:;">${user.userName }</a>
+            <dl class="layui-nav-child">
+                <dd>
+                    <a href="${pageContext.request.contextPath}/loginOut" style="color: black;">退出</a>
+                </dd>
+            </dl>
+        </li>
+    </ul>
+</div>
+<!-- 顶部结束 -->
+<!-- 中部开始 -->
+<div class="wrapper" style="table-layout: fixed;">
+    <!-- 左侧菜单开始 -->
+    <div class="left-nav">
+        <div id="side-nav">
+            <ul id="nav">
+                <li class="list"><a href="javascript:void(0);"> <i class="layui-icon">&#xe857;</i> 主要功能 <i class="layui-icon nav_right">&#xe61a;</i></a>
+                    <ul class="sub-menu opened">
+                        <li><a href="javascript:;" class="site-demo-active" data-type="tabAdd" data-id="100" data-name="在线脑图">
+                            <i class="iconfont"></i> 在线脑图</a>
+                        </li>
+                        <li><a href="javascript:;" class="site-demo-active" data-type="tabAdd" data-id="101" data-name="用户信息管理">
+                            <i class="iconfont"></i> 用户信息管理</a>
+                        </li>
+                        <li><a href="javascript:;" class="site-demo-active"  data-type="tabAdd" data-id="102" data-name="文件上传">
+                            <i class="iconfont"></i> 文件上传</a>
+                        </li>
+
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <!-- 左侧菜单结束 -->
+    <!-- 右侧主体开始 -->
+    <div class="page-content" style="width: 85%;">
+        <div class="content layui-tab layui-tab-card" lay-filter="mytab" lay-allowclose="true" style="width: 100%;height: 100%;">
+            <ul class="layui-tab-title" style="border-color: #FFB800;">
+                <li class="layui-this" lay-id="0" style="border-style: none;"><span>首页</span></li>
+            </ul>
+            <div class="layui-tab-content" style="height: 100%;padding: 0px;">
+                <!--    		      所有新打开的tab都放在下面这个div里面 -->
+                <div class="layui-tab-item layui-show">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- 右侧主体结束 -->
+</div>
+<!-- 中部结束 -->
+
+<script>
+    layui.use(['element','layer'], function(){
+        var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        //各个模块url
+        var url = {
+            100:'${pageContext.request.contextPath}/kityMind/addKityMind?time=<%=System.currentTimeMillis()%>',
+            101:'${pageContext.request.contextPath}/user/list?time=<%=System.currentTimeMillis()%>',
+            102:'${pageContext.request.contextPath}/file/?time=<%=System.currentTimeMillis()%>',
+
+        };
+
+        //触发事件
+        var active = {
+            //打开一个新的tab
+            tabAdd: function(data){
+                if(data.context.dataset.id==100) {
+                    addTab('test', url[data.context.dataset.id], data.context.dataset.id);
+                }else {
+                    $(".page-content").load(url[data.context.dataset.id]);
+                }
+            }
+        };
+
+        $('.site-demo-active').on('click', function(){
+            var othis = $(this);
+            var type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
 
 
-			  <shiro:hasRole name="admin">
-	           <div class="panel panel-default">
-	           <button  class="btn btn-primary location" data-toggle="collapse" 
-			     data-target="#demo2" data-parent="#according">
-		                  系统管理处 
-	           </button> 
-	           <br>
-	           <div id="demo2" class="collapse">
-		           <ul>
-
-					   <li >
-				            <a class="userManager">用户信息管理</a>
-				        </li>
-					   <li >
-						   <a class="userManager2">用户信息管理2</a>
-					   </li>
-				   </ul>
-	          </div>
-	          </div>
-			  </shiro:hasRole>
-
-	      <div class="panel panel-default">
-	          <button  class="btn btn-primary location" data-toggle="collapse" 
-			     data-target="#demo3" data-parent="#according">
-		                  个人中心 
-	           </button> 
-	           <br>
-	           <div id="demo3" class="collapse">
-		           <ul>
-					   <shiro:hasPermission name="user:edit">
-		                <li >
-				            <a class="personInfo">个人信息</a>
-				        </li>
-					   </shiro:hasPermission>
-				        <li >
-				            <a class="accountManager">修改密码</a>
-				        </li>
-				   </ul>
-	          </div>
-	      </div>
-	      </div>
-	      <div class="mainbody_right">
-	      
-	      </div>
-	  </div>
-      
-   </body>
+    });
+</script>
+</body>
 </html>

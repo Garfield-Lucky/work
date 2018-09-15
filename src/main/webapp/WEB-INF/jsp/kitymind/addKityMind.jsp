@@ -175,7 +175,7 @@
 
 	$('.confirm').on('click',function(){
 
-		var cdaNo = '${cdaNo}';
+		var createUserName = '${user.userName}';
 		var mindName = $(".kityMindName").val();
 		var isOpen =$('input[name="isOpen"]:checked').val();
 
@@ -187,7 +187,7 @@
 		 			type : "POST",
 		 			url : "${pageContext.request.contextPath}/kityMind/save",
 		 			async:false,
-		 			data : {'content':content,'deleteFlag':0,'isOpen':isOpen,'mindName':mindName},
+		 			data : {'createUserName':createUserName,'content':content,'deleteFlag':0,'isOpen':isOpen,'mindName':mindName},
 		 			dataType : 'json',
 		 			success : function(data) {
 		 				if(data!=null&&data.Type=='Y')

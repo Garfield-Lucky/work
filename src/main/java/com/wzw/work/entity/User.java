@@ -1,5 +1,6 @@
 package com.wzw.work.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -65,6 +66,7 @@ public class User {
     /**
      * 最后登录时间
      */
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date lastLoginTime;
 
     /**

@@ -29,6 +29,7 @@ public class DruidAutoConfiguration {
         dataSource.setUrl(properties.getUrl());
         dataSource.setUsername(properties.getUsername());
         dataSource.setPassword(properties.getPassword());
+        dataSource.setDriverClassName(properties.getDriverClass());
         dataSource.setTimeBetweenEvictionRunsMillis(properties.getTimeBetweenEvictionRunsMillis());
         if (properties.getInitialSize() > 0) {
             dataSource.setInitialSize(properties.getInitialSize());

@@ -64,7 +64,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         System.out.println("权限认证方法：MyShiroRealm.doGetAuthenticationInfo()");
         User token = (User)SecurityUtils.getSubject().getPrincipal();
-        Long userId = token.getId();
+        Integer userId = token.getId();
         SimpleAuthorizationInfo info =  new SimpleAuthorizationInfo();
         //根据用户名查询权限（role），放入到Authorization里。
         Set<String> roleSet = userService.findRoles(token.getUserName());
