@@ -89,21 +89,6 @@ public class LoginController {
         return mav;
     }
 
-
-    @RequestMapping("/userList2")
-    public String findUserList(@RequestParam(required = false,defaultValue = "1",value = "pageNum")Integer pageNum, @RequestParam(required = false,defaultValue = "5",value = "pageSize")Integer pageSize,Model model) {
-        log.info("userList2 pageNum "+pageNum+"pageSize "+pageSize);
-        PageHelper.startPage(pageNum, pageSize);
-        //startPage后紧跟的这个查询就是分页查询
-        List<User> user = userService.findUserList();
-        //使用PageInfo包装查询结果，只需要将pageInfo交给页面就可以
-        PageInfo pageInfo = new PageInfo<>(user,pageSize);
-
-        model.addAttribute("pageInfo", pageInfo);
-
-        return "listUser";
-    }
-
     @RequestMapping("/loginOut")
     public String loginOut(HttpServletRequest request) throws IOException {
         HttpSession session = request.getSession();

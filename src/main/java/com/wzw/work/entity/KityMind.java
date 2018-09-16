@@ -1,5 +1,6 @@
 package com.wzw.work.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 
 import java.util.Date;
@@ -17,6 +18,7 @@ public class KityMind implements java.io.Serializable {
     private String createUserName;
 
     //创建时间
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
     //脑图名称
     private String mindName;

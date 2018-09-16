@@ -10,7 +10,7 @@
 <!--    		      所有新打开的tab都放在下面这个div里面 -->
    		      <div class="layui-tab-item layui-show">
 					<div class="content">
-					<div class="demoTable" style="padding:5px;">
+					<div class="demoTable" style="padding:5px;color: white;">
 						创建人：
 						<div class="layui-inline">
 							<input class="layui-input" type="text" name="createUserName" id="createUserName"
@@ -19,7 +19,7 @@
 						</div>
 						脑图名称：
 						<div class="layui-inline">
-							<input class="layui-input" type="text" name="mindName" id=""mindName""
+							<input class="layui-input" type="text" name="mindName" id=mindName"
 								value="" autocomplete="off">
 						</div>
 						
@@ -39,7 +39,7 @@
 					<i class="layui-icon">&#xe608;</i>添加
 				</button>
 				</xblock> 
-				<table class="layui-hide" id="table_content" lay-filter="mydata"></table>
+				<table class="layui-hide" id="table_content" lay-filter="tableId"></table>
 				<!-- 右侧内容框架，更改从这里结束 -->
 			</div>
 		</div>
@@ -64,7 +64,7 @@
 				table.render({
 							elem : '#table_content',
 							method : "post",
-							url : '${pageContext.request.contextPath}/caseinfo/kityMind_querygrid.action'
+							url : '${pageContext.request.contextPath}/kityMind/kityMindList'
 							,id: 'tableId'
 							,page : true //是否显示分页
 							,limit:10
@@ -77,11 +77,11 @@
 								width: 150,
 								templet:function(row){
 									var html='';
-							 		if(row.CREATE_USER_NAME=='${user.userName }'){
-									    html='<a href="javaScript:modiData(\''+ row.ID +'\',\''+row.CREATE_USER_NAME+'\');" title="修改"><i class="layui-icon" >&#xe642;</i></a>&nbsp;&nbsp;</a> '
-										    html+='<a href="javaScript:deleteData(\''+ row.ID +'\');" title="删除"><i class="layui-icon" >&#xe640;</i></a>&nbsp;&nbsp;</a>';
-									        html+='<a href="javaScript:viewData(\''+ row.ID +'\');" title="查看"><i class="layui-icon"  >&#xe615;</i></a>&nbsp;&nbsp; </a>';
-									        html+='<a href="javaScript:reName(\''+ row.ID +'\');" title="重命名"><i class="layui-icon"  >&#xe6b2;</i></a>&nbsp;&nbsp;</a>';
+							 		if(row.createUserName=='${user.userName }'){
+									    html='<a href="javaScript:modiData(\''+ row.id +'\',\''+row.CREATE_USER_NAME+'\');" title="修改"><i class="layui-icon" >&#xe642;</i></a>&nbsp;&nbsp;</a> '
+										    html+='<a href="javaScript:deleteData(\''+ row.id +'\');" title="删除"><i class="layui-icon" >&#xe640;</i></a>&nbsp;&nbsp;</a>';
+									        html+='<a href="javaScript:viewData(\''+ row.id +'\');" title="查看"><i class="layui-icon"  >&#xe615;</i></a>&nbsp;&nbsp; </a>';
+									        html+='<a href="javaScript:reName(\''+ row.id +'\');" title="重命名"><i class="layui-icon"  >&#xe6b2;</i></a>&nbsp;&nbsp;</a>';
 							 			}else{
 							 				 html+='<a href="javaScript:viewData(\''+ row.ID +'\');" title="查看"><i class="layui-icon"  >&#xe615;</i></a>&nbsp;&nbsp;</a> ';
 							 				 html+='<a href="javaScript:modiData(\''+ row.ID +'\',\''+row.CREATE_USER_NAME+'\');" title="另存为新脑图"><i class="layui-icon"  >&#xe61f;</i></a>&nbsp;&nbsp;</a>'
@@ -89,15 +89,15 @@
 									return html;
 								}
 							},  {
-								field : 'MIND_NAME',
+								field : 'mindName',
 								title : '脑图名称',
 								minWidth : 100,
 							},  {
-								field : 'CREATE_USER_NAME',
+								field : 'createUserName',
 								minWidth : 120,
 								title : '创建人账号'
 							}, {
-								field : 'IS_OPEN',
+								field : 'isOpen',
 								minWidth : 100,
 								title : '是否公开',
 								templet: function(d){
@@ -109,7 +109,7 @@
 									 }
 								}
 							}, {
-								field : 'CREATE_TIME',
+								field : 'createTime',
 								minWidth : 100,
 								title : '填表日期'
 							}
@@ -147,7 +147,7 @@
 			 //新增
 			$(".add-form").on('click',function(){
                  var tabId=new Date().getTime();
-				 var url = '${pageContext.request.contextPath}/kityMind/addKityMind?tabId='+tabId;
+				 var url = '${pageContext.request.contextPath}/kityMind/toAdd?tabId='+tabId;
 				 addTab('新增脑图',url,tabId);
 			});
 			 
@@ -169,14 +169,14 @@
 		
 		 function modiData(ids,userName){//修改数据
 			   var id=new Date().getTime();
-			   var url= '${pageContext.request.contextPath}/caseinfo/kityMind_toAlter.action?&id='+ids+'&userName='+userName+'&tabId='+id;
+			   var url= '${pageContext.request.contextPath}/kityMind/edit?&id='+ids+'&tabId='+id;
 			   addTab('修改数据',url,id);
 		   }
 		 
 		
 		function viewData(ids){//查看数据
 		       var tabId=new Date().getTime();
-			   var url= '${pageContext.request.contextPath}/kityMind/viewKityMind?id='+ids+'&tabId='+tabId;
+			   var url= '${pageContext.request.contextPath}/kityMind/view?id='+ids+'&tabId='+tabId;
 			   addTab('脑图详情',url,tabId);
 		   }
 		 
@@ -212,10 +212,11 @@
         //拿到table对象
     	   layui.use('table',function() {
 				var table = layui.table; //表格
-	    	    layer.confirm('确定要删除此数据吗?', function(index){ 
+	    	    layer.confirm('确定要删除此数据吗?', function(index){
+	    	        layer.close(index);
 	              	$.ajax({
 	             	   type: "POST",dataType: "json",
-		         	   url: "${pageContext.request.contextPath}/caseinfo/kityMind_delete.action",
+		         	   url: "${pageContext.request.contextPath}/kityMind/delete",
 	             	   data : {
 							id:ids
 						},

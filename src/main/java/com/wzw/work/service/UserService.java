@@ -13,20 +13,9 @@ import java.util.Set;
  *
  * @author Created by wuzhangwei on 2018/7/21 14:44
  */
-public interface UserService {
+public interface UserService extends BaseService<User,Long>{
 
-    /**
-     * @Description: 保存用户信息
-     * @param
-     * @author Created by wuzhangwei on 2018/9/12 23:11
-     */
-    void saveUser(User user);
-    /**
-     * @Description: 根据主键查询用户信息
-     * @param
-     * @author Created by wuzhangwei on 2018/9/12 23:11
-     */
-    User findUserById(Long id);
+
     /**
      * @Description: 根据用户名，查询用户信息
      *
@@ -35,29 +24,6 @@ public interface UserService {
      */
     User findUserByName(String userName);
 
-    /**
-     * @Description: 查询用户列表
-     *
-     * @param
-     * @author Created by wuzhangwei on 2018/7/22 18:00
-     */
-    List<User> findUserList();
-
-    /**
-     * @Description: 更新用户信息
-     *
-     * @param
-     * @author Created by wuzhangwei on 2018/7/28 10:45
-     */
-    void updateByPrimaryKey(User user);
-
-    /**
-     * @Description: 通过map查询用户
-     *
-     * @param
-     * @author Created by wuzhangwei on 2018/7/28 13:52
-     */
-    User findUserByMap(Map map);
 
     /**
      * @Description: 获取角色
@@ -83,18 +49,5 @@ public interface UserService {
      */
     List<User> findUserList(Map map);
 
-    /**
-     * @Description: 获取用户总数
-     *
-     * @param
-     * @author Created by wuzhangwei on 2018/8/19 16:39
-     */
-    Long countByUser();
-    /**
-     * @Description: 根据用户id删除用户
-     *
-     * @param
-     * @author Created by wuzhangwei on 2018/8/19 16:39
-     */
-    void deleteByPrimaryKey(Integer id);
+
 }

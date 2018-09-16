@@ -89,8 +89,9 @@ public class UserRestController extends BaseController{
     public ModelAndView findUserList(@RequestParam(required = false,defaultValue = "1",value = "pageNum")Integer pageNum,@RequestParam(required = false,defaultValue = "5",value = "pageSize")Integer pageSize) {
         log.info("***************************findUserList pageNum "+pageNum+" pageSize "+pageSize+"****************************");
         PageHelper.startPage(pageNum, pageSize);
+        Map map = new HashMap();
         //startPage后紧跟的这个查询就是分页查询
-        List<User> user = userService.findUserList();
+        List<User> user = userService.findUserList(map);
         //使用PageInfo包装查询结果，只需要将pageInfo交给页面就可以
         PageInfo pageInfo = new PageInfo<>(user,pageSize);
 
@@ -134,7 +135,7 @@ public class UserRestController extends BaseController{
         map.put("pageSize",limit);
         map.put("userName",userName);
 
-        List<User> listUser = userService.findUserList(map);
+        List<User> listUser = userService.list(map);
 //        System.out.println(listUser.get(0).toString());
         // 查询条件
         pageResult.setTotalCount(listUser.size());
@@ -152,7 +153,7 @@ public class UserRestController extends BaseController{
     @RequestMapping("/edit")
     public ModelAndView editUser(Long id){
         log.info("editUser");
-        User user = userService.findUserById(id);
+        User user = userService.findById(id);
         ModelAndView mav = new ModelAndView("user/editUser");
         mav.addObject("user",user);
         return mav;
@@ -161,7 +162,7 @@ public class UserRestController extends BaseController{
     @RequestMapping("/view")
     public ModelAndView viewUser(Long id){
         log.info("viewUser");
-        User user = userService.findUserById(id);
+        User user = userService.findById(id);
         ModelAndView mav = new ModelAndView("user/viewUser");
         mav.addObject("user",user);
         return mav;
@@ -174,7 +175,7 @@ public class UserRestController extends BaseController{
         JSONObject json = new JSONObject();
         try {
             System.out.println(user.toString());
-            userService.updateByPrimaryKey(user);
+            userService.edit(user);
             json.put("status","success");
             json.put("message","更新成功");
         } catch (Exception e) {
@@ -190,7 +191,7 @@ public class UserRestController extends BaseController{
     public String addUser(User user) {
         JSONObject json = new JSONObject();
         try {
-            userService.saveUser(user);
+            userService.save(user);
             json.put("status","success");
             json.put("message","保存成功");
         } catch (Exception e) {
@@ -210,10 +211,10 @@ public class UserRestController extends BaseController{
      */
     @RequestMapping(value="/delUser")
     @ResponseBody
-    public String deletUser(Integer id) {
+    public String deletUser(Long id) {
         JSONObject json = new JSONObject();
         try {
-            userService.deleteByPrimaryKey(id);
+            userService.delete(id);
             json.put("status","success");
             json.put("message","删除成功");
         } catch (Exception e) {

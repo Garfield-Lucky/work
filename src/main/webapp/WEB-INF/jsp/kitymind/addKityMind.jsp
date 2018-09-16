@@ -185,7 +185,7 @@
 		editor.minder.exportData('json').then(function(content){
 			 $.ajax({
 		 			type : "POST",
-		 			url : "${pageContext.request.contextPath}/kityMind/save",
+		 			url : "${pageContext.request.contextPath}/kityMind/add",
 		 			async:false,
 		 			data : {'createUserName':createUserName,'content':content,'deleteFlag':0,'isOpen':isOpen,'mindName':mindName},
 		 			dataType : 'json',

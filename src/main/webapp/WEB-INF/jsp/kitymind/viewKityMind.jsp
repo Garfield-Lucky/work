@@ -29,7 +29,7 @@
 </head>
 <body>
    <script id="minder-view" type="application/kityminder" minder-data-type="json">
-   ${jsonData}
+   ${kityMind.content}
     </script>
 </body>
 <script type="text/javascript" src="${pageContext.request.contextPath}/plugin/naotu/kityMind/bower_components/kityminder-core/dist/kityminder.core.min.js"></script>

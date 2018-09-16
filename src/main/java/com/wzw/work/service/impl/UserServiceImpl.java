@@ -25,16 +25,26 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
-    public void saveUser(User user) {
+    /**
+     * @Description: 保存入库
+     * @param
+     * @author Created by wuzhangwei on 2018/9/16 17:17
+     */
+    public Long save(User user) throws Exception{
         logger.info("saveUser"+user.toString());
-        userDao.saveUser(user);
+       return userDao.save(user);
     }
 
-    public User findUserById(Long id) {
+    /**
+     * @Description: 根据主键查询实体
+     * @param
+     * @author Created by wuzhangwei on 2018/9/16 17:17
+     */
+    @Override
+    public User findById(Long id) {
         logger.info("findUserById"+id);
-        return userDao.findUserById(id);
+        return userDao.findById(id);
     }
-
 
     /**
      * @Description:  通过用户名查找用户信息
@@ -53,9 +63,10 @@ public class UserServiceImpl implements UserService {
      * @param
      * @author Created by wuzhangwei on 2018/7/22 18:03
      */
-    public List<User> findUserList(){
+    @Override
+    public List<User> list(Map param){
         logger.info("findUserList");
-        return userDao.findUserList();
+        return userDao.list(param);
     }
 
     /**
@@ -64,20 +75,10 @@ public class UserServiceImpl implements UserService {
      * @param
      * @author Created by wuzhangwei on 2018/7/28 10:45
      */
-    public void updateByPrimaryKey(User user){
+    @Override
+    public void edit(User user) throws Exception {
         logger.info("updateByPrimaryKey"+user.toString());
-        userDao.updateByPrimaryKey(user);
-    }
-
-    /**
-     * @Description: 通过map查询用户
-     *
-     * @param
-     * @author Created by wuzhangwei on 2018/7/28 13:52
-     */
-    public User findUserByMap(Map map){
-        logger.info("findUserByMap"+map.toString());
-        return userDao.findUserByMap(map);
+        userDao.edit(user);
     }
 
     /**
@@ -114,16 +115,6 @@ public class UserServiceImpl implements UserService {
         return userDao.findUserList(map);
     }
 
-    /**
-     * @Description: 获取用户总数
-     *
-     * @param
-     * @author Created by wuzhangwei on 2018/8/19 16:39
-     */
-    public Long countByUser(){
-        logger.info("findUserList");
-        return userDao.countByUser();
-    }
 
     /**
      * @Description: 根据用户id删除用户
@@ -131,9 +122,10 @@ public class UserServiceImpl implements UserService {
      * @param
      * @author Created by wuzhangwei on 2018/8/19 16:39
      */
-    public void deleteByPrimaryKey(Integer id){
+    @Override
+    public void delete(Long id) throws Exception{
         logger.info("deleteByPrimaryKey"+id);
-        userDao.deleteByPrimaryKey(id);
+        userDao.delete(id);
     }
 
 }

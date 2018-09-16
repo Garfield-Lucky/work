@@ -27,7 +27,7 @@
      //在线脑图（百度脑图）
      $(".mainbody").find('.kityMind').click(function(){
 
-         $('.mainbody_right').load("/kityMind/addKityMind");
+         $('.mainbody_right').load("/kityMind/list");
      });
 
      //文件上传

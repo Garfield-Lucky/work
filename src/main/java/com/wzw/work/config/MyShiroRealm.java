@@ -2,6 +2,7 @@ package com.wzw.work.config;
 
 import com.wzw.work.entity.Role;
 import com.wzw.work.entity.User;
+import com.wzw.work.exception.MyException;
 import com.wzw.work.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -49,7 +50,11 @@ public class MyShiroRealm extends AuthorizingRealm {
         }else{
             //更新登录时间 last login time
             user.setLastLoginTime(new Date());
-            userService.updateByPrimaryKey(user);
+            try {
+                userService.edit(user);
+            } catch (Exception e) {
+               throw new MyException("shiro",e.getMessage());
+            }
         }
         return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
     }

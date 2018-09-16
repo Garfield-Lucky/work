@@ -84,7 +84,7 @@
         var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
         //各个模块url
         var url = {
-            100:'${pageContext.request.contextPath}/kityMind/addKityMind?time=<%=System.currentTimeMillis()%>',
+            100:'${pageContext.request.contextPath}/kityMind/list?time=<%=System.currentTimeMillis()%>',
             101:'${pageContext.request.contextPath}/user/list?time=<%=System.currentTimeMillis()%>',
             102:'${pageContext.request.contextPath}/file/?time=<%=System.currentTimeMillis()%>',
 
@@ -94,11 +94,11 @@
         var active = {
             //打开一个新的tab
             tabAdd: function(data){
-                if(data.context.dataset.id==100) {
-                    addTab('test', url[data.context.dataset.id], data.context.dataset.id);
-                }else {
+                // if(data.context.dataset.id==100) {
+                //     addTab('test', url[data.context.dataset.id], data.context.dataset.id);
+                // }else {
                     $(".page-content").load(url[data.context.dataset.id]);
-                }
+                // }
             }
         };
 

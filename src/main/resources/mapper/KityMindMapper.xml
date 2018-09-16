@@ -17,14 +17,14 @@
 		id, create_user_name, create_time, mind_name, content, delete_flag, is_open
 	</sql>
 
-	<select id="queryKityMiindById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select
 		<include refid="Base_Column_List" />
 		from kity_mind
 		where id = #{id}
 	</select>
 
-	<insert id="saveKityMind" parameterType="com.wzw.work.entity.KityMind" >
+	<insert id="save" parameterType="com.wzw.work.entity.KityMind" >
 
 		insert into kity_mind (create_user_name, mind_name, content, delete_flag, is_open
 		)
@@ -32,4 +32,34 @@
 		)
 	</insert>
 
+	<update id="edit" parameterType="com.wzw.work.entity.KityMind" >
+		update kity_mind
+		<set >
+			<if test="content != null" >
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<select id="list" resultMap="BaseResultMap" parameterType="Map">
+		select
+		<include refid="Base_Column_List" />
+		from kity_mind
+		<where>
+			<if test="mindName!=null and mindName!='' ">
+				and mind_name like concat(concat('%',#{mindName}),'%')
+			</if>
+
+		</where>
+		<if test="page!=null and pageSize!=null">
+			limit #{page},#{pageSize}
+		</if>
+	</select>
+
+	<delete id="delete" parameterType="java.lang.Long">
+      delete from kity_mind
+      where id = #{id}
+    </delete>
 </mapper>
