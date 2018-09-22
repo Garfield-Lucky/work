@@ -13,7 +13,7 @@ import java.util.Set;
  *
  * @author Created by wuzhangwei on 2018/7/21 14:44
  */
-public interface UserService extends BaseService<User,Long>{
+public interface UserService extends BaseService<User,Integer>{
 
 
     /**

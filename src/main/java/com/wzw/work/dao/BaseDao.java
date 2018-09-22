@@ -22,14 +22,14 @@ public interface BaseDao<T, ID extends Serializable> {
      * @param
      * @author Created by wuzhangwei on 2018/9/16 17:17 
      */
-    void delete(ID id) throws Exception;
+    ID delete(ID id) throws Exception;
 
     /**
      * @Description: 修改
      * @param
      * @author Created by wuzhangwei on 2018/9/16 17:17 
      */
-    void edit(T entity) throws Exception;
+    ID edit(T entity) throws Exception;
 
     /**
      * @Description: 根据主键查询实体

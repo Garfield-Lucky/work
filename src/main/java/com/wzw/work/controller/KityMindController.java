@@ -123,7 +123,7 @@ public class KityMindController extends BaseController{
      * @author Created by wuzhangwei on 2018/9/16 22:59
      */
     @RequestMapping("/view")
-    public String viewKityMind(Model model,Long id){
+    public String viewKityMind(Model model,int id){
         log.info("viewKityMind");
         KityMind kityMind = kityMindService.findById(id);
         model.addAttribute("kityMind",kityMind);
@@ -137,7 +137,7 @@ public class KityMindController extends BaseController{
      */
     @RequestMapping(value="/delete")
     @ResponseBody
-    public String deletKityMind(Long id) {
+    public String deletKityMind(int id) {
         JSONObject json = new JSONObject();
         try {
             kityMindService.delete(id);
