@@ -85,8 +85,8 @@ public class KityMindController extends BaseController{
         log.info("addKityMind");
         kityMindService.save(entity);
         Map map =new HashMap<String,Object>();
-        map.put("Type","Y");
-        map.put("Message","保存成功");
+        map.put("status","success");
+        map.put("message","保存成功");
         return map;
     }
 
@@ -96,10 +96,13 @@ public class KityMindController extends BaseController{
      * @author Created by wuzhangwei on 2018/9/16 22:59
      */
     @RequestMapping("/toEdit")
-    public String toModify(){
+    public String toEdit(Model model,int id){
         log.info("toModify");
+        KityMind kityMind = kityMindService.findById(id);
+        model.addAttribute("kityMind",kityMind);
         return "kitymind/editKityMind";
     }
+
 
     /**
      * @Description: 修改并入库
@@ -112,8 +115,8 @@ public class KityMindController extends BaseController{
         log.info("editKityMind");
         kityMindService.edit(entity);
         Map map =new HashMap<String,Object>();
-        map.put("Type","Y");
-        map.put("Message","修改成功");
+        map.put("status","success");
+        map.put("message","修改成功");
         return map;
     }
 
@@ -123,7 +126,7 @@ public class KityMindController extends BaseController{
      * @author Created by wuzhangwei on 2018/9/16 22:59
      */
     @RequestMapping("/view")
-    public String viewKityMind(Model model,Long id){
+    public String viewKityMind(Model model,int id){
         log.info("viewKityMind");
         KityMind kityMind = kityMindService.findById(id);
         model.addAttribute("kityMind",kityMind);
@@ -137,7 +140,7 @@ public class KityMindController extends BaseController{
      */
     @RequestMapping(value="/delete")
     @ResponseBody
-    public String deletKityMind(Long id) {
+    public String deletKityMind(int id) {
         JSONObject json = new JSONObject();
         try {
             kityMindService.delete(id);

@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 public class KityMind implements java.io.Serializable {
 
-    private Long id;
+    private int id;
 
     //创建人用户名
     private String createUserName;
@@ -27,9 +27,9 @@ public class KityMind implements java.io.Serializable {
     private String content;
 
     //删除标志0：正常，1：删除
-    private Long deleteFlag;
+    private int deleteFlag;
 
     //是否公开0：公开，1：不公开，只有自己可见
-    private Long isOpen;
+    private int isOpen;
 
 }

@@ -81,7 +81,6 @@
 									    html='<a href="javaScript:modiData(\''+ row.id +'\',\''+row.CREATE_USER_NAME+'\');" title="修改"><i class="layui-icon" >&#xe642;</i></a>&nbsp;&nbsp;</a> '
 										    html+='<a href="javaScript:deleteData(\''+ row.id +'\');" title="删除"><i class="layui-icon" >&#xe640;</i></a>&nbsp;&nbsp;</a>';
 									        html+='<a href="javaScript:viewData(\''+ row.id +'\');" title="查看"><i class="layui-icon"  >&#xe615;</i></a>&nbsp;&nbsp; </a>';
-									        html+='<a href="javaScript:reName(\''+ row.id +'\');" title="重命名"><i class="layui-icon"  >&#xe6b2;</i></a>&nbsp;&nbsp;</a>';
 							 			}else{
 							 				 html+='<a href="javaScript:viewData(\''+ row.ID +'\');" title="查看"><i class="layui-icon"  >&#xe615;</i></a>&nbsp;&nbsp;</a> ';
 							 				 html+='<a href="javaScript:modiData(\''+ row.ID +'\',\''+row.CREATE_USER_NAME+'\');" title="另存为新脑图"><i class="layui-icon"  >&#xe61f;</i></a>&nbsp;&nbsp;</a>'
@@ -91,14 +90,14 @@
 							},  {
 								field : 'mindName',
 								title : '脑图名称',
-								minWidth : 100,
+								minWidth : 150,
 							},  {
 								field : 'createUserName',
-								minWidth : 120,
+								minWidth : 150,
 								title : '创建人账号'
 							}, {
 								field : 'isOpen',
-								minWidth : 100,
+								minWidth : 150,
 								title : '是否公开',
 								templet: function(d){
 									 if(d.IS_OPEN==0)
@@ -110,7 +109,7 @@
 								}
 							}, {
 								field : 'createTime',
-								minWidth : 100,
+								minWidth : 150,
 								title : '填表日期'
 							}
 							] ],
@@ -169,7 +168,7 @@
 		
 		 function modiData(ids,userName){//修改数据
 			   var id=new Date().getTime();
-			   var url= '${pageContext.request.contextPath}/kityMind/edit?&id='+ids+'&tabId='+id;
+			   var url= '${pageContext.request.contextPath}/kityMind/toEdit?&id='+ids+'&tabId='+id;
 			   addTab('修改数据',url,id);
 		   }
 		 
@@ -180,32 +179,6 @@
 			   addTab('脑图详情',url,tabId);
 		   }
 		 
-		 function reName(id){
-			 layer.prompt({title: '请输入脑图名称，并确认', formType: 1},function(value, index, elem){
-						 $.ajax({
-					 			type : "POST",
-					 			url : "${pageContext.request.contextPath}/caseinfo/kityMind_reName.action",
-					 			async:false,
-					 			data : {'id':id,'mindName':value},
-					 			dataType : 'json',
-					 			success : function(data) {
-					 				layer.close(index);
-					 				if(data!=null&&data.Type=='Y')
-				 					{
-					 					//刷新前一个页面，并关闭当前页面
-					 			       layer.msg("修改成功"); 
-					 			      $("#reload").click();
-				 					}else{
-				 						layer.msg('修改失败!')
-				 					}
-					 			},
-					 			error : function() {
-					 				layer.close(index);
-					 				layer.msg("error");
-					 			}
-					 		});
-			   });
-		 }
 
 	
 	function deleteData(ids){//删除单条数据
@@ -225,24 +198,14 @@
 	             	   },
 	           		   success: function(msgJson){
 	           			  layer.closeAll('loading');
-	           		   		 if (!msgJson || !msgJson.length){
-	                              if (msgJson.Type && msgJson.Type == "error" && msgJson.Message){
-	                             	 layer.msg(msgJson.Message);
-	                            	     return;
-	                              }else if(msgJson.Type=="Y"){
-	                             	 layer.msg(msgJson.Message);
-	                             	//执行重载
-	                  				table.reload('tableId', {
-	                  					page : {
-	                  						curr : 1
-	                  					//重新从第 1 页开始
-	                  					},
-	                  					where : {
+                           if(data!=null&&data.status=='success')
+                           {
+                               top.layui.layer.msg('删除成功!');
+                               $('#reload').click();
+                           }else{
+                               top.layui.layer.msg('保存失败!');
+                           }
 
-	                  					}
-	                  				});
-	                              }
-	                          } 
 	          		   },
 	          		   error: function(msg){
 	          			  layer.closeAll('loading');

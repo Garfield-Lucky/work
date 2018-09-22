@@ -17,7 +17,7 @@
 		id, create_user_name, create_time, mind_name, content, delete_flag, is_open
 	</sql>
 
-	<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+	<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
 		<include refid="Base_Column_List" />
 		from kity_mind
@@ -58,7 +58,7 @@
 		</if>
 	</select>
 
-	<delete id="delete" parameterType="java.lang.Long">
+	<delete id="delete" parameterType="java.lang.Integer">
       delete from kity_mind
       where id = #{id}
     </delete>

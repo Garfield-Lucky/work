@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>CDA在线脑图</title>
+	<title>在线脑图</title>
 
 	<link href="favicon.ico" type="image/x-icon" rel="shortcut icon">
 
@@ -52,7 +52,7 @@
 	</style>
 </head>
 <body ng-app="kityminderDemo" ng-controller="MainController">
-<h1 class="editor-title">CDA在线脑图</h1>
+<h1 class="editor-title">在线脑图</h1>
 <kityminder-editor on-init="initEditor(editor, minder)"></kityminder-editor>
 <div id="svgdata">
 </div>
@@ -120,7 +120,7 @@
 <script src="${pageContext.request.contextPath}/plugin/naotu/kityMind/bower_components/color-picker/dist/color-picker.min.js"></script>
 <!--  endbower  -->
 <script src="${pageContext.request.contextPath}/plugin/naotu/kityMind/dist/saveSvgAsPng.js"></script>
-
+<script src="${pageContext.request.contextPath}/js/common_layui.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/script/bsgrid/plugins/bootstrap/2.3.2/js/bootstrap.min.js"></script>
 
 
@@ -164,9 +164,9 @@
 
 	
 $('.confirm').on('click',function(){
-		
-		var cdaNo = '${queryData.cdaNo}';
-		var mindName = $(".kityMindName").val();
+
+        var createUserName = '${user.userName}';
+        var mindName = $(".kityMindName").val();
 		var isOpen =$('input[name="isOpen"]:checked').val();
 		
 		if(mindName.trim()!='')
@@ -175,65 +175,62 @@ $('.confirm').on('click',function(){
 		editor.minder.exportData('json').then(function(content){
 			 $.ajax({
 		 			type : "POST",
-		 			url : "${pageContext.request.contextPath}/caseinfo/kityMind_add.action",
+		 			url : "${pageContext.request.contextPath}/kityMind/add",
 		 			async:false,
-		 			data : {'content':content,'cdaNo':cdaNo,'deleteFlag':0,'isOpen':isOpen,'mindName':mindName},
+		 			data : {'createUserName':createUserName,'content':content,'deleteFlag':0,'isOpen':isOpen,'mindName':mindName},
 		 			dataType : 'json',
 		 			success : function(data) {
-		 				if(data!=null&&data.Type=='Y')
+		 				if(data!=null&&data.status=='success')
 	 					{
 		 					//刷新前一个页面，并关闭当前页面
-		 			       var jsonMessage = top.jQuery.ligerDialog.waitting("添加成功"); 
-                 		   setTimeout(function () { 
-                 		   jsonMessage.close();
-                 		   top.tab.reload('icoMenuToolAddTab_27');
-		 				   top.tab.removeSelectedTabItem();
+                            top.layui.layer.msg("添加成功");
+                 		   setTimeout(function () {
+                 		   top.layui.layer.closeAll('dialog');
+                 		   deleteTab('${param.tabId}');
                      		}, 1000);
 	 					}else{
-	 						alert('保存失败!')
+	 						top.layui.layer.msg('保存失败!')
 	 					} 
 		 			},
 		 			error : function() {
-		 				alert("error");
+		 				top.layui.layer.msg("error");
 		 			}
 		 		});
 		  });
 		}else{
-			alert('脑图名称不能为空');
+			top.layui.layer.msg('脑图名称不能为空');
 		}
 		
 	});
 
 	$(document).on('click','.save',function(event){
-		var id = '${queryData.id}';
-		var cdaNo = '${queryData.cdaNo}';
+		var id = '${kityMind.id}';
+		
 		//拿到json数据，所以需要调用editor.minder.exportData
 		editor.minder.exportData('json').then(function(content){
 		 $.ajax({
 	 			type : "POST",
-	 			url : "${pageContext.request.contextPath}/caseinfo/kityMind_alter.action",
+	 			url : "${pageContext.request.contextPath}/kityMind/edit.action",
 	 			async:false,
-	 			data : {'id':id,'content':content,'cdaNo':cdaNo,'deleteFlag':0,'isOpen':0},
+	 			data : {'id':id,'content':content,'deleteFlag':0,'isOpen':0},
 	 			dataType : 'json',
 	 			success : function(data) {
-	 				if(data!=null&&data.Type=='Y')
+	 				if(data!=null&&data.status=='success')
  					{
-	 					//刷新前一个页面，并关闭当前页面
-	 			    var jsonMessage = top.jQuery.ligerDialog.waitting("修改成功"); 
-             		setTimeout(function () { 
-             		jsonMessage.close();
-             		top.tab.reload('icoMenuToolAddTab_27');
-	 				top.tab.removeSelectedTabItem();
-                 			}, 1000);
+	 			    top.layui.layer.msg("修改成功");
+             		setTimeout(function () {
+             		top.layui.layer.closeAll('dialog');
+             		deleteTab('${param.tabId}');
+					}, 1000);
  					}else{
- 		 			  var jsonMessage = top.jQuery.ligerDialog.waitting("修改失败"); 
- 	             	  setTimeout(function () { 
- 	             	  jsonMessage.close();
+                        top.layui.layer.msg("修改失败"); 
+ 	             	  setTimeout(function () {
+                          top.layui.layer.closeAll('dialog');
  	                 }, 2000);
  					}
 	 			},
 	 			error : function() {
-	 				alert("修改失败,请联系管理员");
+	 				top.layui.layer.msg("修改失败,请联系管理员");
 	 			}
 	 		});
 		});
@@ -315,28 +312,8 @@ $('.confirm').on('click',function(){
 				$scope.initEditor = function(editor, minder) {
 					window.editor = editor;
 					window.minder = minder;
-					var id='${queryData.id}';
-					$.ajax({ 
-					       	   type: "POST", 
-					       	   dataType: "json", 
-					      	   url: "${pageContext.request.contextPath}/caseinfo/kityMind_view.action",
-					      	   data: "id="+id,
-					       	   async:false, 
-					     		 success: function(data){ 
-					        		   		 if (!data || !data.length){ 
-					                           if (data.Type && data.Type == "error" && data.Message){ 
-					                         	     return; 
-					                           }else if(data.Type=="Y"){ 
-					                         	  content=data.Message; 
-					                         	  editor.minder.importData("json", content).then(function(data){ 
-					               		 		}); 
-					                           } 
-					                       }  
-					    		   }, 
-					    		   error: function(msg){ 
-					    			   alter(msg); 
-					    		   } 
-					       	}); 
+                    editor.minder.importData("json", '${kityMind.content}').then(function(data){
+                    });
 				};
 			});
 	

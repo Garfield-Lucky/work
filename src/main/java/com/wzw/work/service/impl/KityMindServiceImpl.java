@@ -24,7 +24,8 @@ public class KityMindServiceImpl implements KityMindService {
      * @param
      * @author Created by wuzhangwei on 2018/7/29 21:13
      */
-    public Long save(KityMind entity) throws Exception {
+    @Override
+    public Integer save(KityMind entity) throws Exception {
 
         return kityMindDao.save(entity);
     }
@@ -35,9 +36,9 @@ public class KityMindServiceImpl implements KityMindService {
      * @author Created by wuzhangwei on 2018/9/16 18:30
      */
     @Override
-    public void delete(Long id) throws Exception {
+    public Integer delete(Integer id) throws Exception {
 
-        kityMindDao.delete(id);
+        return kityMindDao.delete(id);
     }
 
     /**
@@ -46,9 +47,9 @@ public class KityMindServiceImpl implements KityMindService {
      * @author Created by wuzhangwei on 2018/9/16 18:30
      */
     @Override
-    public void edit(KityMind entity) throws Exception {
+    public Integer edit(KityMind entity) throws Exception {
 
-        kityMindDao.edit(entity);
+       return kityMindDao.edit(entity);
     }
 
     /**
@@ -57,7 +58,8 @@ public class KityMindServiceImpl implements KityMindService {
      * @param
      * @author Created by wuzhangwei on 2018/7/29 21:15
      */
-    public KityMind findById(Long id){
+    @Override
+    public KityMind findById(Integer id){
 
         return kityMindDao.findById(id);
     }

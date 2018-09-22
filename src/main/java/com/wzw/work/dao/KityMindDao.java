@@ -11,7 +11,7 @@ import java.util.Map;
  * @Description: TODO
  */
 @Repository
-public interface KityMindDao extends BaseDao<KityMind,Long>{
+public interface KityMindDao extends BaseDao<KityMind,Integer>{
 
 
 }

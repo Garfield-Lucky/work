@@ -151,7 +151,7 @@ public class UserRestController extends BaseController{
     }
 
     @RequestMapping("/edit")
-    public ModelAndView editUser(Long id){
+    public ModelAndView editUser(int id){
         log.info("editUser");
         User user = userService.findById(id);
         ModelAndView mav = new ModelAndView("user/editUser");
@@ -160,7 +160,7 @@ public class UserRestController extends BaseController{
     }
 
     @RequestMapping("/view")
-    public ModelAndView viewUser(Long id){
+    public ModelAndView viewUser(int id){
         log.info("viewUser");
         User user = userService.findById(id);
         ModelAndView mav = new ModelAndView("user/viewUser");
@@ -175,7 +175,8 @@ public class UserRestController extends BaseController{
         JSONObject json = new JSONObject();
         try {
             System.out.println(user.toString());
-            userService.edit(user);
+            int a = userService.edit(user);
+            System.out.println(a);
             json.put("status","success");
             json.put("message","更新成功");
         } catch (Exception e) {
@@ -191,7 +192,8 @@ public class UserRestController extends BaseController{
     public String addUser(User user) {
         JSONObject json = new JSONObject();
         try {
-            userService.save(user);
+            int a= userService.save(user);
+            System.out.println(a);
             json.put("status","success");
             json.put("message","保存成功");
         } catch (Exception e) {
@@ -211,10 +213,11 @@ public class UserRestController extends BaseController{
      */
     @RequestMapping(value="/delUser")
     @ResponseBody
-    public String deletUser(Long id) {
+    public String deletUser(int id) {
         JSONObject json = new JSONObject();
         try {
-            userService.delete(id);
+            int a =userService.delete(id);
+            System.out.println(a);
             json.put("status","success");
             json.put("message","删除成功");
         } catch (Exception e) {

@@ -21,13 +21,13 @@ function delCheckedData(postUrl,rowids,table,tableId){
             },
             success: function(msgJson){
                 if (!msgJson || !msgJson.length){
-                    if (msgJson.status && msgJson.status == "error" && msgJson.message){
-                        top.layui.layer.msg(msgJson.message,{
+                    if (msgJson.Type && msgJson.Type == "error" && msgJson.Message){
+                        top.layui.layer.msg(msgJson.Message,{
                             time: 2000,
                         });
                         return;
-                    }else if(msgJson.status=="success"){
-                        top.layui.layer.msg(msgJson.message,{
+                    }else if(msgJson.Type=="Y"){
+                        top.layui.layer.msg(msgJson.Message,{
                             time: 1000
                         });
                         //刷新列表
@@ -69,7 +69,7 @@ function addTab(title,url,id){
     var card = 'mytab';
     parent.element.tabAdd(card, {
         title: '<span>'+title+'</span>',
-        content: '<iframe frameborder="0" name="home" id="home" width="100%" height="600px" src="'+url+'"></iframe>',
+        content: '<iframe frameborder="0" name="home" id="home" style="overflow-x:hidden; overflow-y:auto;padding:10px;background-color:#06222e;width:98%;height:774px;"  src="'+url+'"></iframe>',
         id: id
     });
 
@@ -121,32 +121,44 @@ function deleteTab(id){
 /**
  * 公用函数
  * 提交表单
- * @param form 表单对象
+ * @param form 表单对象  type 关闭的类型 0或'' 关闭tab或弹出层  1：仅关闭弹出层并刷新父页面的数据列表
  * @author wzw 20180910
  */
-function ajaxSave(form) {
+function ajaxSave(form,type) {
     var index = top.layui.layer.msg('保存中...', {
         icon: 16
         ,shade: 0.01
     });
     $.ajax({
         type: "POST",
-        url: $("form").attr("action"),
-        data: $("form").serialize(),
+        url: $(form).attr("action"),
+        data: $(form).serialize(),
         dataType: "json",
         cache: false,
         success: function(msgJson){
             top.layui.layer.close(index);
             if (!msgJson || !msgJson.length){
-                if (msgJson.status && msgJson.status == "error" && msgJson.message){
-                    top.layui.layer.msg(msgJson.message);
+                if (msgJson.Type && msgJson.Type == "error" && msgJson.Message){
+                    top.layui.layer.msg(msgJson.Message);
                     return;
-                }else if(msgJson.status=="success"){
-                    top.layui.layer.msg(msgJson.message,{time:2000});
+                }else if(msgJson.Type=="Y"){
+                    top.layui.layer.msg(msgJson.Message,{time:2000});
                     setTimeout(function () {
                         top.layui.layer.closeAll('dialog');
-                        //关闭当前tab
-                        deleteTab(tabId);
+                        if(type==0||type==null||type=='')
+                        {
+                            //关闭当前tab
+                            deleteTab(tabId);
+                            x_admin_close();
+                            parent.$('#reload').click();
+
+                        }else if(type==1){ //需要刷新父页面的table
+                            x_admin_close();
+                            parent.$('#reload').click();
+                        }else{
+                            x_admin_close();
+                        }
+
                     }, 1500);
 
                 }
@@ -182,14 +194,15 @@ $(document).ready(function() {
         success: function(msgJson){
             top.layui.layer.closeAll('loading');
             if (!msgJson || !msgJson.length){
-                if (msgJson.status && msgJson.status == "error" && msgJson.message){
-                    top.layui.layer.msg(msgJson.message);
+                if (msgJson.Type && msgJson.Type == "error" && msgJson.Message){
+                    top.layui.layer.msg(msgJson.Message);
                     return;
-                }else if(msgJson.status=="success"){
-                    top.layui.layer.msg(msgJson.message);
+                }else if(msgJson.Type=="Y"){
+                    top.layui.layer.msg(msgJson.Message);
                     setTimeout(function () {
-                        deleteTab(tabId);
                         top.layui.layer.closeAll('dialog');
+                        deleteTab(tabId);
+                        x_admin_close();
                     }, 1500);
 
                 }
@@ -203,3 +216,43 @@ $(document).ready(function() {
 
     });
 });
+
+/*弹出层*/
+/*
+    参数解释：
+    title   标题
+    url     请求的url
+    id      需要操作的数据id
+    w       弹出层宽度（缺省调默认值）
+    h       弹出层高度（缺省调默认值）
+*/
+function x_admin_show(title,url,w,h){
+    if (title == null || title == '') {
+        title=false;
+    };
+    if (url == null || url == '') {
+        url="404.html";
+    };
+    if (w == null || w == '') {
+        w=890;
+    };
+    if (h == null || h == '') {
+        h=($(window).height() - 50);
+    };
+    top.layui.layer.open({
+        type: 2,
+        area: [w+'px', h +'px'],
+        fix: false, //不固定
+        maxmin: true,
+        shadeClose: true,
+        shade:0.4,
+        title: title,
+        content: url
+    });
+}
+
+/*关闭弹出框口*/
+function x_admin_close(){
+    var index = parent.top.layui.layer.getFrameIndex(window.name);
+    parent.top.layui.layer.close(index);
+}

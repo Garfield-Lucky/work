@@ -137,7 +137,7 @@
 <!-- endbower -->
 
 <script src="${pageContext.request.contextPath}/plugin/naotu/kityMind/dist/kityminder.editor.min.js"></script>
-<%-- <script src="${pageContext.request.contextPath}/plugin/naotu/kityMind/dist/diy.js"> --%>
+<script src="${pageContext.request.contextPath}/js/common_layui.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
 
 <script src="${pageContext.request.contextPath}/script/cda/bank/liClick.js"	type="text/javascript"></script>
 
@@ -190,20 +190,24 @@
 		 			data : {'createUserName':createUserName,'content':content,'deleteFlag':0,'isOpen':isOpen,'mindName':mindName},
 		 			dataType : 'json',
 		 			success : function(data) {
-		 				if(data!=null&&data.Type=='Y')
+		 				if(data!=null&&data.status=='success')
 	 					{
-                            alert('保存成功!')
+                            top.layui.layer.msg('保存成功!');
+                            setTimeout(function () {
+                            top.layui.layer.closeAll('dialog');
+                            deleteTab('${param.tabId}');
+                            }, 1000);
 	 					}else{
-	 						alert('保存失败!')
+	 						top.layui.layer.msg('保存失败!');
 	 					}
 		 			},
 		 			error : function() {
-		 				alert("error");
+		 				top.layui.layer.msg("error");
 		 			}
 		 		});
 		  });
 		}else{
-			alert('脑图名称不能为空');
+			top.layui.layer.msg('脑图名称不能为空');
 		}
 
 	});
@@ -292,13 +296,13 @@
 					break;
 				default:
 					console.log("File not supported!");
-					alert('只支持.km、.md、.json文件');
+					top.layui.layer.msg('只支持.km、.md、.json文件');
 					return;
 			}
 			var reader = new FileReader();
 			reader.onload = function(e) {
 				var content = reader.result;
-                 alert(content);
+                 top.layui.layer.msg(content);
 				editor.minder.importData(fileType, content).then(function(data){
 					console.log(data)
 
