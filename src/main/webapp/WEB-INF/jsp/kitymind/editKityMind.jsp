@@ -180,7 +180,7 @@ $('.confirm').on('click',function(){
 		 			data : {'createUserName':createUserName,'content':content,'deleteFlag':0,'isOpen':isOpen,'mindName':mindName},
 		 			dataType : 'json',
 		 			success : function(data) {
-		 				if(data!=null&&data.status=='success')
+		 				if(data!=null&&data.code=='0')
 	 					{
 		 					//刷新前一个页面，并关闭当前页面
                             top.layui.layer.msg("添加成功");
@@ -215,7 +215,7 @@ $('.confirm').on('click',function(){
 	 			data : {'id':id,'content':content,'deleteFlag':0,'isOpen':0},
 	 			dataType : 'json',
 	 			success : function(data) {
-	 				if(data!=null&&data.status=='success')
+	 				if(data!=null&&data.code=='0')
  					{
 	 			    top.layui.layer.msg("修改成功");
              		setTimeout(function () {

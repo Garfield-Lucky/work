@@ -1,5 +1,6 @@
 package com.wzw.work.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +33,7 @@ public class FileController {
     @ResponseBody
     public String upload(@RequestParam(name = "file") MultipartFile file, HttpServletRequest request) {
         log.info("upload");
+        JSONObject json = new JSONObject();
         if (!file.isEmpty()) {
             String saveFileName = file.getOriginalFilename();
             File saveFile = new File(request.getSession().getServletContext().getRealPath("/upload/") + saveFileName);
@@ -43,16 +45,24 @@ public class FileController {
                 out.write(file.getBytes());
                 out.flush();
                 out.close();
-                return "success";
+                json.put("code","0");
+                json.put("msg","上传成功");
+                return json.toString();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                return "fail";
+                json.put("code","1");
+                json.put("msg","上传失败");
+                return json.toString();
             } catch (IOException e) {
                 e.printStackTrace();
-                return "fail";
+                json.put("code","1");
+                json.put("msg","上传失败");
+                return json.toString();
             }
         } else {
-            return "上传失败，因为文件为空.";
+            json.put("code","1");
+            json.put("msg","上传失败，因为文件为空");
+            return json.toString();
         }
     }
  
@@ -66,6 +76,7 @@ public class FileController {
     @ResponseBody
     public String uploadFiles(HttpServletRequest request) throws IOException {
         log.info("uploadFiles");
+        JSONObject json = new JSONObject();
         File savePath = new File(request.getSession().getServletContext().getRealPath("/upload/"));
         if (!savePath.exists()) {
             savePath.mkdirs();
@@ -83,20 +94,28 @@ public class FileController {
                         stream = new BufferedOutputStream(new FileOutputStream(saveFile));
                         stream.write(bytes);
                         stream.close();
+                        json.put("code","0");
+                        json.put("msg","所有文件上传成功");
                     } catch (Exception e) {
                         if (stream != null) {
                             stream.close();
                             stream = null;
                         }
-                        return "第 " + i + " 个文件上传有错误" + e.getMessage();
+                        json.put("code","1");
+                        json.put("msg","第 " + i + " 个文件上传有错误" + e.getMessage());
+                        return json.toString();
                     }
                 } else {
-                    return "第 " + i + " 个文件为空";
+                    json.put("code","1");
+                    json.put("msg","第 " + i + " 个文件为空");
+                    return json.toString();
                 }
             }
-            return "所有文件上传成功";
+            return json.toString();
         }else{
-            return "后台没有接收到文件";
+            json.put("code","1");
+            json.put("msg","后台没有接收到文件");
+            return json.toString();
         }
 
     }

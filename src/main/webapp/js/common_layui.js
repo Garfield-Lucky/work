@@ -11,7 +11,7 @@ function delCheckedData(postUrl,rowids,table,tableId){
     top.layui.layer.confirm('确认要删除吗?',function (index){
         top.layui.layer.close(index);
         $.ajax({
-            type: "POST",
+            code: "POST",
             url: postUrl,
             dataType: "json",
             cache: false,
@@ -19,15 +19,15 @@ function delCheckedData(postUrl,rowids,table,tableId){
             beforeSend:function(){
                 top.layui.layer.msg('正在删除中');
             },
-            success: function(msgJson){
-                if (!msgJson || !msgJson.length){
-                    if (msgJson.Type && msgJson.Type == "error" && msgJson.Message){
-                        top.layui.layer.msg(msgJson.Message,{
+            success: function(data){
+                if (!data || !data.length){
+                    if (data.code && data.code == "1" && data.msg){
+                        top.layui.layer.msg(data.msg,{
                             time: 2000,
                         });
                         return;
-                    }else if(msgJson.Type=="Y"){
-                        top.layui.layer.msg(msgJson.Message,{
+                    }else if(data.code=="0"){
+                        top.layui.layer.msg(data.msg,{
                             time: 1000
                         });
                         //刷新列表
@@ -121,7 +121,7 @@ function deleteTab(id){
 /**
  * 公用函数
  * 提交表单
- * @param form 表单对象  type 关闭的类型 0或'' 关闭tab或弹出层  1：仅关闭弹出层并刷新父页面的数据列表
+ * @param form 表单对象  code 关闭的类型 0或'' 关闭tab或弹出层  1：仅关闭弹出层并刷新父页面的数据列表
  * @author wzw 20180910
  */
 function ajaxSave(form,type) {
@@ -130,19 +130,19 @@ function ajaxSave(form,type) {
         ,shade: 0.01
     });
     $.ajax({
-        type: "POST",
+        code: "POST",
         url: $(form).attr("action"),
         data: $(form).serialize(),
         dataType: "json",
         cache: false,
-        success: function(msgJson){
+        success: function(data){
             top.layui.layer.close(index);
-            if (!msgJson || !msgJson.length){
-                if (msgJson.Type && msgJson.Type == "error" && msgJson.Message){
-                    top.layui.layer.msg(msgJson.Message);
+            if (!data || !data.length){
+                if (data.code && data.code == "1" && data.msg){
+                    top.layui.layer.msg(data.msg);
                     return;
-                }else if(msgJson.Type=="Y"){
-                    top.layui.layer.msg(msgJson.Message,{time:2000});
+                }else if(data.code=="0"){
+                    top.layui.layer.msg(data.msg,{time:2000});
                     setTimeout(function () {
                         top.layui.layer.closeAll('dialog');
                         if(type==0||type==null||type=='')
@@ -183,7 +183,7 @@ $(document).ready(function() {
     if(!$('form:first') || !$('form:first').ajaxForm)
         return;
     $('form:first').ajaxForm({
-        type: "POST",
+        code: "POST",
         cache: false,
         beforeSubmit:function(formData, form, options){
             top.layui.layer.msg('保存中...', {
@@ -191,14 +191,14 @@ $(document).ready(function() {
                 ,shade: 0.01
             });
         },
-        success: function(msgJson){
+        success: function(data){
             top.layui.layer.closeAll('loading');
-            if (!msgJson || !msgJson.length){
-                if (msgJson.Type && msgJson.Type == "error" && msgJson.Message){
-                    top.layui.layer.msg(msgJson.Message);
+            if (!data || !data.length){
+                if (data.code && data.code == "1" && data.msg){
+                    top.layui.layer.msg(data.msg);
                     return;
-                }else if(msgJson.Type=="Y"){
-                    top.layui.layer.msg(msgJson.Message);
+                }else if(data.code=="0"){
+                    top.layui.layer.msg(data.msg);
                     setTimeout(function () {
                         top.layui.layer.closeAll('dialog');
                         deleteTab(tabId);
@@ -240,7 +240,7 @@ function x_admin_show(title,url,w,h){
         h=($(window).height() - 50);
     };
     top.layui.layer.open({
-        type: 2,
+        code: 2,
         area: [w+'px', h +'px'],
         fix: false, //不固定
         maxmin: true,

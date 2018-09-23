@@ -227,14 +227,14 @@
 	             	   beforeSend:function(msg){
 	             			layer.load(0, {shade: [0.1,'#fff'] });
 	             	   },
-	           		   success: function(msgJson){
+	           		   success: function(data){
 	           			  layer.closeAll('loading');
-	           		   		 if (!msgJson || !msgJson.length){
-                                 if (msgJson.status && msgJson.status == "error" && msgJson.message){
-	                             	 layer.msg(msgJson.message);
+	           		   		 if (!data || !data.length){
+                                 if (data.code && data.code == "1" && data.msg){
+	                             	 layer.msg(data.msg);
 	                            	     return;
-	                              }else if(msgJson.status=="success"){
-	                             	 layer.msg(msgJson.message);
+	                              }else if(data.code=="0"){
+	                             	 layer.msg(data.msg);
 	                             	//执行重载
 	                  				table.reload('tableId', {
 	                  					page : {

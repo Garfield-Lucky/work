@@ -190,7 +190,7 @@
 		 			data : {'createUserName':createUserName,'content':content,'deleteFlag':0,'isOpen':isOpen,'mindName':mindName},
 		 			dataType : 'json',
 		 			success : function(data) {
-		 				if(data!=null&&data.status=='success')
+		 				if(data!=null&&data.code=='0')
 	 					{
                             top.layui.layer.msg('保存成功!');
                             setTimeout(function () {

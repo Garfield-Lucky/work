@@ -85,8 +85,8 @@ public class KityMindController extends BaseController{
         log.info("addKityMind");
         kityMindService.save(entity);
         Map map =new HashMap<String,Object>();
-        map.put("status","success");
-        map.put("message","保存成功");
+        map.put("code","0");
+        map.put("msg","保存成功");
         return map;
     }
 
@@ -115,8 +115,8 @@ public class KityMindController extends BaseController{
         log.info("editKityMind");
         kityMindService.edit(entity);
         Map map =new HashMap<String,Object>();
-        map.put("status","success");
-        map.put("message","修改成功");
+        map.put("code","0");
+        map.put("msg","修改成功");
         return map;
     }
 
@@ -144,12 +144,12 @@ public class KityMindController extends BaseController{
         JSONObject json = new JSONObject();
         try {
             kityMindService.delete(id);
-            json.put("status","success");
-            json.put("message","删除成功");
+            json.put("code","0");
+            json.put("msg","删除成功");
         } catch (Exception e) {
             log.error("删除脑图失败" + id, e);
-            json.put("status","error");
-            json.put("message","删除失败");
+            json.put("code","1");
+            json.put("msg","删除失败");
         }
         return json.toString();
     }

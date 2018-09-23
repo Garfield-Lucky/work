@@ -100,7 +100,7 @@
 								minWidth : 150,
 								title : '是否公开',
 								templet: function(d){
-									 if(d.IS_OPEN==0)
+									 if(d.isOpen==0)
 									 {
 										 return '公开';
 									 }else{
@@ -183,8 +183,6 @@
 	
 	function deleteData(ids){//删除单条数据
         //拿到table对象
-    	   layui.use('table',function() {
-				var table = layui.table; //表格
 	    	    layer.confirm('确定要删除此数据吗?', function(index){
 	    	        layer.close(index);
 	              	$.ajax({
@@ -196,14 +194,14 @@
 	             	   beforeSend:function(msg){
 	             			layer.load(0, {shade: [0.1,'#fff'] });
 	             	   },
-	           		   success: function(msgJson){
+	           		   success: function(data){
 	           			  layer.closeAll('loading');
-                           if(data!=null&&data.status=='success')
+                           if(data!=null&&data.code=='0')
                            {
                                top.layui.layer.msg('删除成功!');
                                $('#reload').click();
                            }else{
-                               top.layui.layer.msg('保存失败!');
+                               top.layui.layer.msg('删除失败!');
                            }
 
 	          		   },
@@ -213,8 +211,6 @@
 	             	});
 
               });
-    	   
-    	   });
     }
       
 </script>

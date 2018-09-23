@@ -46,7 +46,7 @@ public class UserRestController extends BaseController{
         //如果用的是@Controller注解，则把返回的String当做视图名称，框架默认会去 spring.view.prefix 目录下的 （index拼接spring.view.suffix）页面
         log.info("***************************index****************************");
         ModelAndView mav = new ModelAndView("index2");
-        mav.addObject("message",  "hello world");
+        mav.addObject("msg",  "hello world");
         return mav;
     }
 
@@ -177,12 +177,12 @@ public class UserRestController extends BaseController{
             System.out.println(user.toString());
             int a = userService.edit(user);
             System.out.println(a);
-            json.put("status","success");
-            json.put("message","更新成功");
+            json.put("code","0");
+            json.put("msg","更新成功");
         } catch (Exception e) {
             log.error("更新用户失败" + user.toString(), e);
-            json.put("status","error");
-            json.put("message","更新失败");
+            json.put("code","1");
+            json.put("msg","更新失败");
         }
         return json.toString();
     }
@@ -194,12 +194,12 @@ public class UserRestController extends BaseController{
         try {
             int a= userService.save(user);
             System.out.println(a);
-            json.put("status","success");
-            json.put("message","保存成功");
+            json.put("code","0");
+            json.put("msg","保存成功");
         } catch (Exception e) {
             log.error("添加用户失败" + user.toString(), e);
-            json.put("status","error");
-            json.put("message","保存失败");
+            json.put("code","1");
+            json.put("msg","保存失败");
         }
         return json.toString();
     }
@@ -218,12 +218,12 @@ public class UserRestController extends BaseController{
         try {
             int a =userService.delete(id);
             System.out.println(a);
-            json.put("status","success");
-            json.put("message","删除成功");
+            json.put("code","0");
+            json.put("msg","删除成功");
         } catch (Exception e) {
             log.error("删除用户失败" + id, e);
-            json.put("status","error");
-            json.put("message","删除失败");
+            json.put("code","1");
+            json.put("msg","删除失败");
         }
         return json.toString();
     }
