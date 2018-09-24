@@ -1,7 +1,5 @@
 package com.wzw.work.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.wzw.work.entity.User;
 import com.wzw.work.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,7 +47,7 @@ public class LoginController {
             subject.login(token);
             HttpSession session = request.getSession();
             User loginUser = (User)SecurityUtils.getSubject().getPrincipal();
-            session.setAttribute("user",loginUser);
+            session.setAttribute("sessionUser",loginUser);
             return "index";
         }catch (Exception e){
             model.addAttribute("error","用户名或密码错误") ;
@@ -92,8 +88,7 @@ public class LoginController {
     @RequestMapping("/loginOut")
     public String loginOut(HttpServletRequest request) throws IOException {
         HttpSession session = request.getSession();
-        log.info("loginOut"+session.getAttribute("user").toString());
-        System.out.println("************************************ "+session.getAttribute("user"));
+        log.info("loginOut"+session.getAttribute("sessionUser").toString());
         Subject subject = SecurityUtils.getSubject() ;
         subject.logout();
         return "redirect:/login.jsp";

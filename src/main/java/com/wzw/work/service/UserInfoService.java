@@ -49,4 +49,12 @@ public interface UserInfoService {
      */
     public void deleteUser(UserInfo user) ;
 
+    /**
+     * @Description: TODO
+     * @param
+     * @author Created by wuzhangwei on 2018/9/24 10:37
+     */
+    public UserInfo findById(Long id) ;
+
+
 }

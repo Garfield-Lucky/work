@@ -25,7 +25,7 @@
         <i class="iconfont">&#xe699;</i>
     </div>
     <ul class="layui-nav right" lay-filter="">
-        <li class="layui-nav-item" style="float:right;margin-right:50px;color: #000;"><a href="javascript:;">${user.userName }</a>
+        <li class="layui-nav-item" style="float:right;margin-right:50px;color: #000;"><a href="javascript:;">${sessionUser.userName }</a>
             <dl class="layui-nav-child">
                 <dd>
                     <a href="${pageContext.request.contextPath}/loginOut" style="color: black;">退出</a>
@@ -51,6 +51,9 @@
                         </li>
                         <li><a href="javascript:;" class="site-demo-active"  data-type="tabAdd" data-id="102" data-name="文件上传">
                             <i class="iconfont"></i> 文件上传</a>
+                        </li>
+                        <li><a href="javascript:;" class="site-demo-active"  data-type="tabAdd" data-id="103" data-name="全文检索">
+                            <i class="iconfont"></i> 全文检索</a>
                         </li>
 
                     </ul>
@@ -87,6 +90,7 @@
             100:'${pageContext.request.contextPath}/kityMind/list?time=<%=System.currentTimeMillis()%>',
             101:'${pageContext.request.contextPath}/user/list?time=<%=System.currentTimeMillis()%>',
             102:'${pageContext.request.contextPath}/file/?time=<%=System.currentTimeMillis()%>',
+            103:'${pageContext.request.contextPath}/elasticSearch/list?time=<%=System.currentTimeMillis()%>',
 
         };
 

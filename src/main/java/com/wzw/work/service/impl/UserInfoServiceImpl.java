@@ -85,4 +85,9 @@ public class UserInfoServiceImpl implements UserInfoService {
         //根据id去删除对应的索引值
         userInfoRepository.delete(user);
     }
+
+    @Override
+    public UserInfo findById(Long id) {
+        return userInfoRepository.findOne(id);
+    }
 }

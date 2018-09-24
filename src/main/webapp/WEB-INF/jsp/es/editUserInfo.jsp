@@ -24,20 +24,7 @@
 <script src="${pageContext.request.contextPath}/js/common_layui.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
 <script type="text/javascript">
     var tabId = '${param.tabId}';
-    layui.use('form', function(){
-        var form = layui.form;
-        form.on('switch(status)', function(data){
-            console.log(data.elem); //得到checkbox原始DOM对象
-            console.log(data.elem.checked); //开关是否开启，true或者false
-            console.log(data.value); //开关value值，也可以通过data.elem.value得到
-            console.log(data.othis); //得到美化后的DOM对象
-           if(data.elem.checked==true){
-               $("#status").val(0);
-           }else{
-               $("#status").val(1);
-           }
-        });
-    });
+
 
 </script>
 <style>
@@ -57,36 +44,25 @@
     }
 </style>
 <body>
-<form name="form" id="form" method="post" class="layui-form" action="${pageContext.request.contextPath }/user/editUser" onsubmit="return ajaxSave(this);">
+<form name="form" id="form" method="post" class="layui-form" action="${pageContext.request.contextPath }/elasticSearch/update" onsubmit="return ajaxSave(this);">
     <table class="layui-table" width="100%">
         <tr>
-            <th colspan="2" align="left">修改人员信息</th>
+            <th colspan="2" align="left">修改索引</th>
         </tr>
         <tr>
-            <td class="left" >账号:</td>
+            <td class="left" >姓名:</td>
             <td class="right">
-                <input type="text" id="userName" name="userName" VALUE="${user.userName}" class="layui-input" required disabled/>
+                <input type="text" id="name" name="name" VALUE="${user.name}" class="layui-input" required/>
                 <input type="hidden" id="id" name="id" VALUE="${user.id}" class="layui-input" required />
             </td>
         </tr>
         <tr>
-            <td class="left" >密码:</td>
-            <td class="right">
-                <input type="text" id="password" name="password" VALUE="${user.password}" class="layui-input" required />
-            </td>
-        </tr>
-        <tr>
-            <td class="left" >真实姓名:</td>
-            <td class="right">
-                <input type="text" id="trueName" name="trueName" VALUE="${user.trueName}" class="layui-input" required />
-            </td>
-        </tr>
-        <tr>
-            <td class="left"  >年龄:</td>
+            <td class="left" >年龄:</td>
             <td class="right">
                 <input type="text" id="age" name="age" VALUE="${user.age}" class="layui-input" required />
             </td>
         </tr>
+
         <tr>
             <td class="left"  >性别:</td>
             <td class="right">
@@ -101,17 +77,15 @@
             </td>
         </tr>
         <tr>
-            <td class="left"  >微信:</td>
+            <td class="left"  >描述:</td>
             <td class="right">
-                <input type="text" id="wx" name="wx" VALUE="${user.wx}" class="layui-input" required />
+                <input type="text" id="description" name="description" VALUE="${user.description}" class="layui-input" required />
             </td>
         </tr>
         <tr>
-            <td class="left"  >状态:</td>
+            <td class="left"  >创建时间:</td>
             <td class="right">
-                <input type="checkbox" lay-skin="switch" lay-text="开启|禁用" lay-filter="status" VALUE="${user.status}" <c:if test="${user.status ==0}"> checked </c:if>/>
-                <input type="hidden" id="status" name="status" VALUE="${user.status}"/>
-
+                <input type="text" id="createtm" name="createtm" VALUE="${user.createtm}" class="layui-input" required />
             </td>
         </tr>
 

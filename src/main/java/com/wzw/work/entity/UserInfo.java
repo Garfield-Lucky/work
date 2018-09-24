@@ -46,5 +46,16 @@ public class UserInfo implements Serializable {
      */
     private String createtm;
 
+    public UserInfo() {
+    }
 
+    public UserInfo(Long id, String name, Integer age, String sex, String tel, String description, String createtm) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+        this.tel = tel;
+        this.description = description;
+        this.createtm = createtm;
+    }
 }
