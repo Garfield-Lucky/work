@@ -36,7 +36,7 @@ public class FileController {
         JSONObject json = new JSONObject();
         if (!file.isEmpty()) {
             String saveFileName = file.getOriginalFilename();
-            File saveFile = new File(request.getSession().getServletContext().getRealPath("/upload/") + saveFileName);
+            File saveFile = new File("D:\\A\\upload\\" + saveFileName);
             if (!saveFile.getParentFile().exists()) {
                 saveFile.getParentFile().mkdirs();
             }

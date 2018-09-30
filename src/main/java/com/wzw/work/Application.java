@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 // Spring Boot 应用的标识
 @SpringBootApplication
 @ServletComponentScan
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 600)
 // mapper 接口类扫描包配置
 @MapperScan("com.wzw.work.dao")
 public class Application {
