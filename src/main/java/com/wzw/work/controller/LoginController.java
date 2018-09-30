@@ -80,7 +80,7 @@ public class LoginController {
         //如果用的是@RestController注解，则把返回的String当做结果，而非视图
         //如果用的是@Controller注解，则把返回的String当做视图名称，框架默认会去 spring.view.prefix 目录下的 （index拼接spring.view.suffix）页面
         log.info("***************************index****************************");
-        ModelAndView mav = new ModelAndView("index3");
+        ModelAndView mav = new ModelAndView("index");
         mav.addObject("message",  "hello world");
         return mav;
     }

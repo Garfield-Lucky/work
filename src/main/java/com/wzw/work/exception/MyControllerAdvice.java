@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * controller 增强器
- *
- * @author sam
- * @since 2017/7/17
+ * @Description: 增强器
+ * @param
+ * @author Created by wuzhangwei on 2018/8/25 20:46
  */
+
 @ControllerAdvice
 public class MyControllerAdvice {
 

@@ -3,6 +3,7 @@ package com.wzw.work.service.impl;
 import com.wzw.work.dao.UserDao;
 import com.wzw.work.entity.User;
 
+import com.wzw.work.intercept.RedisCache;
 import com.wzw.work.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +43,7 @@ public class UserServiceImpl implements UserService {
      * @author Created by wuzhangwei on 2018/9/16 17:17
      */
     @Override
+    @RedisCache
     public User findById(Integer id) {
         logger.info("findUserById"+id);
         return userDao.findById(id);
@@ -53,6 +55,7 @@ public class UserServiceImpl implements UserService {
      * @param userName 用户名
      * @author Created by wuzhangwei on 2018/7/22 8:31
      */
+    @RedisCache
     public User findUserByName(String userName) {
         logger.info("findUserByName"+userName);
         return userDao.findByName(userName);
@@ -65,6 +68,7 @@ public class UserServiceImpl implements UserService {
      * @author Created by wuzhangwei on 2018/7/22 18:03
      */
     @Override
+    @RedisCache(expired = 3600)
     public List<User> list(Map param){
         logger.info("findUserList");
         return userDao.list(param);
@@ -88,6 +92,7 @@ public class UserServiceImpl implements UserService {
      * @param
      * @author Created by wuzhangwei on 2018/7/28 16:40
      */
+    @RedisCache
     public Set<String> findRoles(String userName){
         logger.info("findRoles"+userName);
         return userDao.findRoles(userName);
@@ -99,6 +104,7 @@ public class UserServiceImpl implements UserService {
      * @param
      * @author Created by wuzhangwei on 2018/7/28 16:39
      */
+    @RedisCache
     public Set<String> findPermissions(String userName){
         logger.info("findPermissions"+userName);
         return userDao.findPermissions(userName);
