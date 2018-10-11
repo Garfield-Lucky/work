@@ -78,12 +78,12 @@
 								templet:function(row){
 									var html='';
 							 		if(row.createUserName=='${user.userName }'){
-									    html='<a href="javaScript:modiData(\''+ row.id +'\',\''+row.CREATE_USER_NAME+'\');" title="修改"><i class="layui-icon" >&#xe642;</i></a>&nbsp;&nbsp;</a> '
+									    html='<a href="javaScript:modiData(\''+ row.id +'\',\''+row.createUserName+'\');" title="修改"><i class="layui-icon" >&#xe642;</i></a>&nbsp;&nbsp;</a> '
 										    html+='<a href="javaScript:deleteData(\''+ row.id +'\');" title="删除"><i class="layui-icon" >&#xe640;</i></a>&nbsp;&nbsp;</a>';
 									        html+='<a href="javaScript:viewData(\''+ row.id +'\');" title="查看"><i class="layui-icon"  >&#xe615;</i></a>&nbsp;&nbsp; </a>';
 							 			}else{
-							 				 html+='<a href="javaScript:viewData(\''+ row.ID +'\');" title="查看"><i class="layui-icon"  >&#xe615;</i></a>&nbsp;&nbsp;</a> ';
-							 				 html+='<a href="javaScript:modiData(\''+ row.ID +'\',\''+row.CREATE_USER_NAME+'\');" title="另存为新脑图"><i class="layui-icon"  >&#xe61f;</i></a>&nbsp;&nbsp;</a>'
+							 				 html+='<a href="javaScript:viewData(\''+ row.id +'\');" title="查看"><i class="layui-icon"  >&#xe615;</i></a>&nbsp;&nbsp;</a> ';
+							 				 html+='<a href="javaScript:modiData(\''+ row.id +'\',\''+row.createUserName+'\');" title="另存为新脑图"><i class="layui-icon"  >&#xe61f;</i></a>&nbsp;&nbsp;</a>'
 							 			}
 									return html;
 								}
@@ -175,6 +175,7 @@
 		
 		function viewData(ids){//查看数据
 		       var tabId=new Date().getTime();
+		       alert(ids);
 			   var url= '${pageContext.request.contextPath}/kityMind/view?id='+ids+'&tabId='+tabId;
 			   addTab('脑图详情',url,tabId);
 		   }
