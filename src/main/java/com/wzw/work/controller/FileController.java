@@ -10,12 +10,16 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
 @RequestMapping("/file")
 public class FileController {
 
+
+    //文件上传路径
+    private static final String WEB_UPLOAD_PATH="D:/upload/";
 
     @RequestMapping("/")
     public ModelAndView index(){
@@ -36,7 +40,11 @@ public class FileController {
         JSONObject json = new JSONObject();
         if (!file.isEmpty()) {
             String saveFileName = file.getOriginalFilename();
-            File saveFile = new File("D:\\A\\upload\\" + saveFileName);
+            String suffixName = saveFileName.substring(saveFileName.lastIndexOf("."));
+            String name = UUID.randomUUID().toString().replace("-","");
+            saveFileName = name + suffixName;//文件重命名
+            String file_path = WEB_UPLOAD_PATH + saveFileName;//文件存储路径
+            File saveFile = new File(file_path);
             if (!saveFile.getParentFile().exists()) {
                 saveFile.getParentFile().mkdirs();
             }
@@ -77,7 +85,7 @@ public class FileController {
     public String uploadFiles(HttpServletRequest request) throws IOException {
         log.info("uploadFiles");
         JSONObject json = new JSONObject();
-        File savePath = new File(request.getSession().getServletContext().getRealPath("/upload/"));
+        File savePath = new File(WEB_UPLOAD_PATH);
         if (!savePath.exists()) {
             savePath.mkdirs();
         }
@@ -90,7 +98,11 @@ public class FileController {
                 if (!file.isEmpty()) {
                     try {
                         byte[] bytes = file.getBytes();
-                        File saveFile = new File(savePath, file.getOriginalFilename());
+                        String saveFileName = file.getOriginalFilename();
+                        String suffixName = saveFileName.substring(saveFileName.lastIndexOf("."));
+                        String name = UUID.randomUUID().toString().replace("-","");
+                        saveFileName = name + suffixName;//文件重命名
+                        File saveFile = new File(savePath, saveFileName);
                         stream = new BufferedOutputStream(new FileOutputStream(saveFile));
                         stream.write(bytes);
                         stream.close();
@@ -99,7 +111,6 @@ public class FileController {
                     } catch (Exception e) {
                         if (stream != null) {
                             stream.close();
-                            stream = null;
                         }
                         json.put("code","1");
                         json.put("msg","第 " + i + " 个文件上传有错误" + e.getMessage());

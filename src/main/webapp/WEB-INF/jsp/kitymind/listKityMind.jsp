@@ -175,7 +175,6 @@
 		
 		function viewData(ids){//查看数据
 		       var tabId=new Date().getTime();
-		       alert(ids);
 			   var url= '${pageContext.request.contextPath}/kityMind/view?id='+ids+'&tabId='+tabId;
 			   addTab('脑图详情',url,tabId);
 		   }

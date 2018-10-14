@@ -43,7 +43,6 @@ public class UserServiceImpl implements UserService {
      * @author Created by wuzhangwei on 2018/9/16 17:17
      */
     @Override
-    @RedisCache
     public User findById(Integer id) {
         logger.info("findUserById"+id);
         return userDao.findById(id);
@@ -55,7 +54,6 @@ public class UserServiceImpl implements UserService {
      * @param userName 用户名
      * @author Created by wuzhangwei on 2018/7/22 8:31
      */
-    @RedisCache
     public User findUserByName(String userName) {
         logger.info("findUserByName"+userName);
         return userDao.findByName(userName);
@@ -68,7 +66,7 @@ public class UserServiceImpl implements UserService {
      * @author Created by wuzhangwei on 2018/7/22 18:03
      */
     @Override
-    @RedisCache(expired = 3600)
+    @RedisCache(expired = 120)
     public List<User> list(Map param){
         logger.info("findUserList");
         return userDao.list(param);
