@@ -44,18 +44,18 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
       <!-- 移除嵌入式tomcat插件 -->
-      <!--<exclusions>-->
-        <!--<exclusion>-->
-          <!--<groupId>org.springframework.boot</groupId>-->
-          <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
-        <!--</exclusion>-->
-      <!--</exclusions>-->
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
 
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-tomcat</artifactId>
-    <!--<scope>provided</scope>-->
+    <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -98,25 +98,25 @@
     </dependency>
 
     <!-- 添加oracle jdbc driver -->
-    <dependency>
-      <groupId>com.oracle</groupId>
-      <artifactId>ojdbc14</artifactId>
-      <version>10.2.0.4.0</version>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>com.oracle</groupId>-->
+      <!--<artifactId>ojdbc14</artifactId>-->
+      <!--<version>10.2.0.4.0</version>-->
+    <!--</dependency>-->
 
     <!--使用外置tomcat需要添加该包-->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>3.1.0</version>
-      <!--<scope>provided</scope>-->
+      <scope>provided</scope>
     </dependency>
 
     <!-- jsp -->
     <dependency>
       <groupId>org.apache.tomcat.embed</groupId>
       <artifactId>tomcat-embed-jasper</artifactId>
-      <!--<scope>provided</scope>-->
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
