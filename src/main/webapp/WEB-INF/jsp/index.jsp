@@ -52,6 +52,9 @@
                         <li><a href="javascript:;" class="site-demo-active"  data-type="tabAdd" data-id="102" data-name="文件上传">
                             <i class="iconfont"></i> 文件上传</a>
                         </li>
+                        <li><a href="javascript:;" class="site-demo-active"  data-type="tabAdd" data-id="104" data-name="plupload文件上传">
+                            <i class="iconfont"></i> plupload文件上传</a>
+                        </li>
                         <li><a href="javascript:;" class="site-demo-active"  data-type="tabAdd" data-id="103" data-name="全文检索">
                             <i class="iconfont"></i> 全文检索</a>
                         </li>
@@ -90,6 +93,7 @@
             100:'${pageContext.request.contextPath}/kityMind/list?time=<%=System.currentTimeMillis()%>',
             101:'${pageContext.request.contextPath}/user/list?time=<%=System.currentTimeMillis()%>',
             102:'${pageContext.request.contextPath}/file/?time=<%=System.currentTimeMillis()%>',
+            104:'${pageContext.request.contextPath}/file/plupload?time=<%=System.currentTimeMillis()%>',
             103:'${pageContext.request.contextPath}/elasticSearch/list?time=<%=System.currentTimeMillis()%>',
 
         };
@@ -98,11 +102,11 @@
         var active = {
             //打开一个新的tab
             tabAdd: function(data){
-                // if(data.context.dataset.id==100) {
-                //     addTab('test', url[data.context.dataset.id], data.context.dataset.id);
-                // }else {
+                 //if(data.context.dataset.id==104) {
+                  //   addTab('test', url[data.context.dataset.id], data.context.dataset.id);
+               //  }else {
                     $(".page-content").load(url[data.context.dataset.id]);
-                // }
+               //  }
             }
         };
 

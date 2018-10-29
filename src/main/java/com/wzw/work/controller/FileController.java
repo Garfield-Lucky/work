@@ -19,11 +19,17 @@ public class FileController {
 
 
     //文件上传路径
-    private static final String WEB_UPLOAD_PATH="D:/upload/";
+    private static final String WEB_UPLOAD_PATH="../upload/";
 
     @RequestMapping("/")
     public ModelAndView index(){
         ModelAndView mav = new ModelAndView("upload");
+        return mav;
+    }
+
+    @RequestMapping("/plupload")
+    public ModelAndView plupload(){
+        ModelAndView mav = new ModelAndView("plupload");
         return mav;
     }
 
