@@ -7,11 +7,19 @@
     <!-- 首先需要引入plupload的源代码 -->
     <script src="${pageContext.request.contextPath}/js/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/plupload/plupload.full.min.js"></script>
-     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index/xadmin.css?time=<%=System.currentTimeMillis()%>">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css?time=<%=System.currentTimeMillis()%>">
+    <script src="${pageContext.request.contextPath}/js/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/layui/layui.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/swiper.jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/xadmin.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/js/common_layui.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
+
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/bootstrap-3.3.7-dist/css/bootstrap.css">
     	<style>
 	body{ 
-	width:800px;
-	height:500px;
+	width:600px;
+	height:400px;
 	font-size: 12px;
 	background-color: #E8FFE8;
 	}
@@ -131,10 +139,10 @@
     	}
     	uploader.files.splice(toremove, 1);  
     	};
+
     	//上传完毕，关闭页面
     	$("#close").click(function(){
-  		  //var DG = frameElement.lhgDG;
-  	      // DG.cancel()
+         deleteTab(${param.tabId});
   		});
 
     </script>

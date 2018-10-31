@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wzw.work.dao.GeneralUploadFileDao">
+	<resultMap id="BaseResultMap" type="com.wzw.work.entity.GeneralUploadFile">
+		<result column="id" property="id" />
+		<result column="create_user_name" property="createUserName" />
+		<result column="create_time" property="createTime" />
+		<result column="file_name" property="fileName" />
+		<result column="file_new_name" property="fileNewName" />
+		<result column="file_path" property="filePath" />
+		<result column="file_suffix" property="fileSuffix" />
+		<result column="status" property="status" />
+	</resultMap>
+
+	<parameterMap id="KityMind" type="com.wzw.work.entity.GeneralUploadFile"/>
+
+	<sql id="Base_Column_List">
+		id, create_user_name, create_time, file_name, file_new_name,file_path, file_suffix, status
+	</sql>
+
+	<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from general_upload_file
+		where id = #{id}
+	</select>
+
+	<insert id="save" parameterType="com.wzw.work.entity.GeneralUploadFile" >
+
+		insert into general_upload_file (create_user_name, file_name, file_new_name,file_path, file_suffix
+		)
+		values (#{createUserName,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, #{fileNewName,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, #{fileSuffix,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="edit" parameterType="com.wzw.work.entity.GeneralUploadFile" >
+		update general_upload_file
+		<set >
+			<if test="file_name != null" >
+				file_name = #{fileName,jdbcType=VARCHAR},
+			</if>
+
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<select id="list" resultMap="BaseResultMap" parameterType="Map">
+		select
+		<include refid="Base_Column_List" />
+		from general_upload_file
+		<where>
+			<if test="fileName!=null and fileName!='' ">
+				and file_name like concat(concat('%',#{fileName}),'%')
+			</if>
+			<if test="createUserName!=null and createUserName!='' ">
+				and create_user_name like concat(concat('%',#{createUserName}),'%')
+			</if>
+
+		</where>
+		<if test="page!=null and pageSize!=null">
+			limit #{page},#{pageSize}
+		</if>
+	</select>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+      delete from general_upload_file
+      where id = #{id}
+    </delete>
+</mapper>
