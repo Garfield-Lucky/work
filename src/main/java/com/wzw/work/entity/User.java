@@ -1,10 +1,13 @@
 package com.wzw.work.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.Transient;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -74,6 +77,19 @@ public class User implements Serializable {
      * 状态
      */
     private Integer status;
+
+    //加密密码的盐
+    private String salt;
+
+    /**
+     * 密码盐.  重新对盐重新进行了定义，用户名+salt，这样就更加不容易被破解
+     * @return
+     */
+    @JsonIgnore
+    public String getCredentialsSalt(){
+        return this.userName+this.salt;
+    }
+
 
 
 }

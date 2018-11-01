@@ -4,6 +4,7 @@ package com.wzw.work.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wzw.work.config.MD5;
 import com.wzw.work.entity.User;
 import com.wzw.work.service.UserService;
 import com.wzw.work.util.json.JosnToStrUtil;
@@ -192,6 +193,9 @@ public class UserRestController extends BaseController{
     public String addUser(User user) {
         JSONObject json = new JSONObject();
         try {
+            //把用户的密码按md5规则加密
+            Object obj = MD5.getMd5ByShiro(user.getPassword(),user.getUserName());
+            user.setPassword(obj.toString());
             int a= userService.save(user);
             System.out.println(a);
             json.put("code","0");

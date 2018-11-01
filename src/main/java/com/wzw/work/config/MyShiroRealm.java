@@ -8,8 +8,10 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
@@ -56,7 +58,7 @@ public class MyShiroRealm extends AuthorizingRealm {
                throw new MyException("shiro",e.getMessage());
             }
         }
-        return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
+        return new SimpleAuthenticationInfo(user, user.getPassword(), ByteSource.Util.bytes(user.getCredentialsSalt()), getName());
     }
 
     /**
@@ -79,5 +81,6 @@ public class MyShiroRealm extends AuthorizingRealm {
         info.setStringPermissions(permissionSet);
         return info;
     }
+
 
 }

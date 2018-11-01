@@ -12,12 +12,13 @@
 		<result column="wx" property="wx" />
 		<result column="last_login_time" property="lastLoginTime" />
 		<result column="status" property="status" />
+		<result column="salt" property="salt" />
 	</resultMap>
 
 	<parameterMap id="User" type="com.wzw.work.entity.User"/>
 
 	<sql id="Base_Column_List">
-		id, user_name, password, true_name, sex, age, tel, wx,last_login_time,status
+		id, user_name, password, true_name, sex, age, tel, wx,last_login_time,status,salt
 	</sql>
 
 	<select id="findByName" resultMap="BaseResultMap" parameterType="java.lang.String">
