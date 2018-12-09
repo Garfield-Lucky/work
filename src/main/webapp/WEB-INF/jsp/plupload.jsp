@@ -44,6 +44,28 @@
     </style>
 </head>
 <body>
+
+<div>
+    <%--<form name="form" id="form" method="post" class="layui-form" action="${pageContext.request.contextPath }/user/addUser" onsubmit="return ajaxSave(this);">--%>
+        <table class="layui-table" width="100%">
+
+            <tr>
+                <td class="left" >文件:</td>
+                <td class="right">
+                    <input type="file"  name="file" class="layui-input js-file-form" required />
+                </td>
+            </tr>
+            <tr>
+                <td class="left" >上传:</td>
+                <td class="right">
+                    <input type="button" class="on-upload" onclick="uploadfile()" value="上传"/>
+                </td>
+            </tr>
+
+        </table>
+
+    <%--</form>--%>
+</div>
     <!-- 这里我们只使用最基本的html结构：一个选择文件的按钮，一个开始上传文件的按钮(甚至该按钮也可以不要) -->
    <div class="action">
         <button id="browse" class="btn btn-info">选择文件</button>
@@ -58,6 +80,51 @@
      <button id="close" class="btn btn-success">关闭页面</button>
     </div>
     <script>
+
+        function uploadfile() {
+            var upload = function (file, chunk,timestamp,fileNum,all) {
+                var formData = new FormData();//初始化一个FormData对象
+                var blockSize = 1048576;//每块的大小 1024*1024 = 1M  这里改后台也要跟着改
+                var nextSize = Math.min((chunk + 1) * blockSize, file.size);//读取到结束位置
+                var fileData = file.slice(chunk * blockSize, nextSize);//截取部分文件块
+                formData.append("file", fileData);//部分分片文件
+                formData.append("chunk", chunk);//当前是第几个分片
+                formData.append("fileName", file.name);//保存文件名字
+                formData.append("timestamp", timestamp);//保存时间戳
+                formData.append("fileNum",fileNum+1 );//当前上传的是第几个文件
+                formData.append("all",all );//总文件数
+                if (file.size <= nextSize) {//如果上传完成，则跳出继续上传
+                    formData.append("finish", 200);
+                }else{
+                    formData.append("finish", 0);
+                }
+                $.ajax({
+                    url: "${pageContext.request.contextPath }/file/uploadBySlices",
+                    type: "POST",
+                    data: formData,
+                    processData: false,  // 告诉jQuery不要去处理发送的数据
+                    contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
+                    success: function (responseText) {
+                        if (file.size <= nextSize) {//如果上传完成，则跳出继续上传
+                            alert("上传成功");
+                            return;
+                        }
+                        upload(file, ++chunk,timestamp,fileNum,all);//递归调用
+                    }
+                });
+            };
+
+            //获取时间戳
+            var timestamp = (new Date()).getTime();
+            var num = $(".js-file-form").length;
+
+            for (var i=0;i<num;i++)
+            {
+                var file = $(".js-file-form")[i].files[0];
+                upload(file, 0,timestamp,i,num);
+            }
+
+        }
    
     //实例化一个plupload上传对象
     var uploader = new plupload.Uploader({
