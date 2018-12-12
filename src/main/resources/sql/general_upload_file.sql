@@ -1,0 +1,7 @@
+INSERT INTO `general_upload_file` VALUES (1, 'clipboard (5).png', '4ad9e994586d4d9b953f69d09b2673c6.png', '../upload/4ad9e994586d4d9b953f69d09b2673c6.png', '.png', 'wzw', '2018-10-31 04:03:36', 0);
+INSERT INTO `general_upload_file` VALUES (5, '1520339354290.jpg', '14c12a3b67ef41fca2a60fad85e0047d.jpg', '/home/wuzhangwei/IdeaProjects/work/upload/14c12a3b67ef41fca2a60fad85e0047d.jpg', '.jpg', 'wzw', '2018-10-31 07:12:12', 0);
+INSERT INTO `general_upload_file` VALUES (6, '5a0e5610e3fe41.jpg', 'da9997d789ac41fabdf343b048cf283c.jpg', '../uploadda9997d789ac41fabdf343b048cf283c.jpg', '.jpg', 'wzw', '2018-10-31 07:31:05', 0);
+INSERT INTO `general_upload_file` VALUES (7, 'clipboard (8).png', 'b6911abc111345fdbfd128e244fee831.png', '../upload/b6911abc111345fdbfd128e244fee831.png', '.png', 'wzw', '2018-10-31 07:33:58', 0);
+INSERT INTO `general_upload_file` VALUES (8, '二次元.jpg', '34062ac4e0ce4c8e946f83ff44ef10ff.jpg', '../upload/34062ac4e0ce4c8e946f83ff44ef10ff.jpg', '.jpg', 'D1006', '2018-11-01 12:36:12', 0);
+INSERT INTO `general_upload_file` VALUES (9, '新建 Microsoft Word 文档.docx', 'dc87ae4245d84e80876afa550721de24.docx', '..\\upload/dc87ae4245d84e80876afa550721de24.docx', '.docx', 'wzw', '2018-11-24 16:24:20', 0);
+INSERT INTO `general_upload_file` VALUES (10, '6027024031_看图王.jpg', 'd9ee3eeb6bcc45b38ea0d2b750af3ecf.jpg', '../upload/d9ee3eeb6bcc45b38ea0d2b750af3ecf.jpg', '.jpg', 'wzw', '2018-11-25 21:34:44', 0);
