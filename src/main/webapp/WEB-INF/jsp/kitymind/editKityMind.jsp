@@ -312,11 +312,13 @@ $('.confirm').on('click',function(){
 				$scope.initEditor = function(editor, minder) {
 					window.editor = editor;
 					window.minder = minder;
-                    editor.minder.importData("json", '${kityMind.content}').then(function(data){
+                    editor.minder.importData("json", return2Br('${kityMind.content}')).then(function(data){
                     });
 				};
 			});
-	
+    function return2Br(str) {
+        return str.replace(/\r?\n/g,"");
+    }
 
 </script>
 

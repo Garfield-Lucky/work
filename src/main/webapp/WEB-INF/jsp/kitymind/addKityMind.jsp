@@ -17,7 +17,7 @@
 
 
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/plugin/naotu/kityMind/dist/kityminder.editor.min.css">
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-3.3.7/css/bootstrap.min.css">
 
 	<style>
 		html, body {
@@ -129,7 +129,7 @@
 <script src="${pageContext.request.contextPath}/plugin/naotu/kityMind/bower_components/color-picker/dist/color-picker.min.js"></script>
 <script src="${pageContext.request.contextPath}/plugin/naotu/kityMind/dist/saveSvgAsPng.js"></script>
 
-<script src="${pageContext.request.contextPath}/script/bsgrid/plugins/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/bootstrap-3.3.7/js/bootstrap.js"></script>
 
 <%-- <script src="${pageContext.request.contextPath}/script/jquery/jquery-1.6.2.min.js" type="text/javascript"></script> --%>
 
@@ -139,9 +139,7 @@
 <script src="${pageContext.request.contextPath}/plugin/naotu/kityMind/dist/kityminder.editor.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/common_layui.js?time=<%=System.currentTimeMillis()%>" type="text/javascript"></script>
 
-<script src="${pageContext.request.contextPath}/script/cda/bank/liClick.js"	type="text/javascript"></script>
-
- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-3.3.6/css/bootstrap.min.css">
+ <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/bootstrap-3.3.7/css/bootstrap.css">
 
 
 <script>
@@ -151,6 +149,9 @@
 	html += '<a class="diy export" data-type="md">导出文本</a>',
 	html += '<a class="diy export" data-type="json">导出json</a>',
 	html += '<a class="diy export" data-type="svg">导出png图片</a>',
+	html += '<button class="diy input">',
+	html += '导入<input type="file" id="fileInput">',
+	html += '</button>';
 	html += '<button class="diy">',
 	html += '<a class="diy save" data-toggle="modal" data-target="#myModal">保存</a>',
 	html += '</button>';
@@ -172,6 +173,19 @@
 		'cursor': 'pointer',
 
 	});
+    $('.input').css({
+        'overflow': 'hidden',
+        'position': 'relative',
+    }).find('input').css({
+        cursor: 'pointer',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        display: 'inline-block',
+        opacity: 0
+    });
 
 	$('.confirm').on('click',function(){
 
